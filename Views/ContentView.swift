@@ -1,21 +1,22 @@
-//
-//  ContentView.swift
-//  MyPomodoro
-//
-//  Created by Leandro de Sousa on 30/10/25.
-//
-
 import SwiftUI
 
 struct ContentView: View {
+    @EnvironmentObject var pomodoroViewModel: PomodoroViewModel
+
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        TabView {
+            PomodoroView()
+                .environmentObject(pomodoroViewModel)
+                .tabItem {
+                    Label("Timer", systemImage: "timer")
+                }
+
+            Text("Placeholder para Configurações")
+                .tabItem {
+                    Label("Configurações", systemImage: "gearshape.fill")
+                }
         }
-        .padding()
+        .preferredColorScheme(.dark)
     }
 }
 
