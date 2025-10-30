@@ -1,0 +1,26 @@
+MyPomodoro
+├── Resources (Assets, Info.plist, etc.)
+|
+├── App (Estrutura da Aplicação)
+|   └── MyPomodoroApp.swift
+|
+├── Views
+|   ├── ContentView.swift
+|   ├── Pomodoro
+|   |   ├── PomodoroView.swift
+|   |   └── ControlsView.swift
+|   ├── Settings
+|   |   ├── SettingsView.swift
+|   |   └── TimeSettingsView.swift
+|   └── Clock
+|       └── ClockView.swift
+|
+├── Models
+|   └── UserSettings.swift
+|
+├── ViewModels
+|   ├── PomodoroViewModel.swift
+|
+└── Utilities
+    ├── Extensions.swift
+    └── Constants.swift
