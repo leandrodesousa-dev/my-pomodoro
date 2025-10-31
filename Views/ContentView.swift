@@ -11,7 +11,8 @@ struct ContentView: View {
                     Label("Timer", systemImage: "timer")
                 }
 
-            Text("Placeholder para Configurações")
+            SettingsView()
+                .environmentObject(pomodoroViewModel)
                 .tabItem {
                     Label("Configurações", systemImage: "gearshape.fill")
                 }

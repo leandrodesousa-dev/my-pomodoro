@@ -21,6 +21,7 @@
 		D19A35772EB3CB2400CF95B8 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19A35762EB3CB2400CF95B8 /* Extensions.swift */; };
 		D19A357B2EB3DAD400CF95B8 /* PomodoroState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19A357A2EB3DAD400CF95B8 /* PomodoroState.swift */; };
 		D19A357D2EB3DAEB00CF95B8 /* CycleType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19A357C2EB3DAEA00CF95B8 /* CycleType.swift */; };
+		D1C4F94F2EB434840098A203 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C4F94E2EB4347C0098A203 /* SettingsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +59,7 @@
 		D19A35762EB3CB2400CF95B8 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		D19A357A2EB3DAD400CF95B8 /* PomodoroState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PomodoroState.swift; sourceTree = "<group>"; };
 		D19A357C2EB3DAEA00CF95B8 /* CycleType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CycleType.swift; sourceTree = "<group>"; };
+		D1C4F94E2EB4347C0098A203 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -156,6 +158,7 @@
 		D19A35652EB3ABF800CF95B8 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				D1C4F94E2EB4347C0098A203 /* SettingsView.swift */,
 				D194BEA12EB3A915009C8D4F /* ContentView.swift */,
 				D19A35722EB3C86800CF95B8 /* PomodoroView.swift */,
 			);
@@ -330,6 +333,7 @@
 				D194BEA22EB3A915009C8D4F /* ContentView.swift in Sources */,
 				D19A35772EB3CB2400CF95B8 /* Extensions.swift in Sources */,
 				D19A356F2EB3BCEB00CF95B8 /* UserSettings.swift in Sources */,
+				D1C4F94F2EB434840098A203 /* SettingsView.swift in Sources */,
 				D19A35732EB3C86800CF95B8 /* PomodoroView.swift in Sources */,
 				D19A357D2EB3DAEB00CF95B8 /* CycleType.swift in Sources */,
 				D194BEA02EB3A915009C8D4F /* MyPomodoroApp.swift in Sources */,
