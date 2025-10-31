@@ -30,23 +30,65 @@ final class PomodoroViewModel: ObservableObject {
         }
     }
     
+    private func setInitialTime() {
+        switch currentCycleType {
+        case .focus:
+            timeRemaining = focusDuration
+        case .shortBreak:
+            timeRemaining = shortBreakDuration
+        case .longBreak:
+            timeRemaining = longBreakDuration
+        }
+    }
+    
     func startTimer() {
         guard state != .running else { return }
+        
+        if state == .stopped {
+            setInitialTime()
+        }
         
         state = .running
         startTime = Date()
         timer?.invalidate()
         
-        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
-            guard let self = self else { return }
-            self.timeRemaining -= 1
-            if self.timeRemaining <= 0 {
-                self.timeRemaining = 0
-                self.endCycle()
-            }
-        }
+        timer = Timer(timeInterval: 1.0, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
         
         RunLoop.current.add(timer!, forMode: .common)
+    }
+    
+    @objc private func updateTime() {
+        if timeRemaining > 0 {
+            timeRemaining -= 1
+        } else {
+            timer?.invalidate()
+            timer = nil
+            moveToNextCycle()
+        }
+    }
+
+    private func moveToNextCycle() {
+        switch currentCycleType {
+        case .focus:
+            cyclesCompleted += 1
+            if cyclesCompleted % cyclesBeforeLongBreak == 0 {
+                currentCycleType = .longBreak
+            } else {
+                currentCycleType = .shortBreak
+            }
+            
+        case .shortBreak:
+            currentCycleType = .focus
+            
+        case .longBreak:
+            currentCycleType = .focus
+        }
+        
+        setInitialTime()
+        state = .stopped
+        
+        // TODO: Disparar Notificação de Fim de Ciclo
+        /// Aqui seria o local para disparar um som ou uma notificação local.
     }
 
     func pauseTimer() {
@@ -54,6 +96,15 @@ final class PomodoroViewModel: ObservableObject {
         state = .paused
         timer?.invalidate()
         cancelAllNotifications()
+    }
+    
+    func stopTimer() {
+        guard state != .stopped else { return }
+        
+        state = .stopped
+        timer?.invalidate()
+        timer = nil
+        setInitialTime()
     }
     
     func resetTimer() {
