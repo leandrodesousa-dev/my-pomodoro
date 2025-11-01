@@ -13,7 +13,7 @@ public struct AppConstants {
     
     // MARK: - Container for UI and Design constants.
     struct UI {
-        static let standardHorizontalPadding: CGFloat = 24
+        static let standardPadding: CGFloat = 24
         static let flipClockSpacing: CGFloat = 12
         static let interDigitSpacing: CGFloat = 2
     }

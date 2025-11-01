@@ -12,7 +12,7 @@ struct FlipClockView: View {
     }
     
     var body: some View {
-        HStack(spacing: AppConstants.UI.flipClockSpacing) {
+        HStack {
             FlipDigitBox(digit: timeString.prefix(2), totalBoxWidth: boxWidth)
             Text(":")
                 .font(.system(size: 80, weight: .heavy, design: .rounded))

@@ -4,7 +4,7 @@ struct PomodoroView: View {
     @EnvironmentObject var pomodoroViewModel: PomodoroViewModel
     
     var body: some View {
-        VStack(spacing: 40) {
+        VStack {
             Text(pomodoroViewModel.currentCycleType == .focus ? "Foco" : (pomodoroViewModel.currentCycleType == .shortBreak ? "Pausa Curta" : "Pausa Longa"))
                 .font(.title)
                 .fontWeight(.bold)
@@ -25,7 +25,8 @@ struct PomodoroView: View {
             
             PomodoroControlsView()
         }
-        .padding(.horizontal, AppConstants.UI.standardHorizontalPadding)
+        .padding(.horizontal, AppConstants.UI.standardPadding)
+        .padding(.vertical, AppConstants.UI.standardPadding)
     }
 }
 
