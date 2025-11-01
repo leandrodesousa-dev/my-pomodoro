@@ -8,8 +8,8 @@ struct UserSettings {
 }
 
 public struct AppSettings {
-    public static let defaultFocusDuration: TimeInterval = 25 * 60
-    public static let defaultShortBreakDuration: TimeInterval = 5 * 60
-    public static let defaultLongBreakDuration: TimeInterval = 15 * 60
-    public static let defaultCyclesBeforeLongBreak: Int = 4
+    public static let defaultFocusDuration: TimeInterval = 0.0625 * 60
+    public static let defaultShortBreakDuration: TimeInterval = 0.0625 * 60
+    public static let defaultLongBreakDuration: TimeInterval = 0.0625 * 60
+    public static let defaultCyclesBeforeLongBreak: Int = 2
 }
