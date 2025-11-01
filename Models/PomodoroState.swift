@@ -1,7 +1,5 @@
 import Foundation
 
 enum PomodoroState {
-    case stopped
-    case running
-    case paused
+    case stopped, running, paused
 }

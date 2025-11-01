@@ -22,6 +22,13 @@
 		D19A357B2EB3DAD400CF95B8 /* PomodoroState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19A357A2EB3DAD400CF95B8 /* PomodoroState.swift */; };
 		D19A357D2EB3DAEB00CF95B8 /* CycleType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19A357C2EB3DAEA00CF95B8 /* CycleType.swift */; };
 		D1C4F94F2EB434840098A203 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C4F94E2EB4347C0098A203 /* SettingsView.swift */; };
+		D1C9956B2EB656C30097CC1E /* PomodoroControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C9956A2EB656C10097CC1E /* PomodoroControlsView.swift */; };
+		D1C9956D2EB65B3A0097CC1E /* FlipClockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C9956C2EB65B390097CC1E /* FlipClockView.swift */; };
+		D1C9956F2EB65B6D0097CC1E /* FlipDigitBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C9956E2EB65B6C0097CC1E /* FlipDigitBox.swift */; };
+		D1C995712EB65B9E0097CC1E /* FlipDigit.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C995702EB65B9A0097CC1E /* FlipDigit.swift */; };
+		D1C995732EB65C460097CC1E /* StatusPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C995722EB65C450097CC1E /* StatusPanel.swift */; };
+		D1C995752EB696D70097CC1E /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C995742EB696D10097CC1E /* AppConstants.swift */; };
+		D1C995782EB6A2C90097CC1E /* ControlButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C995772EB6A2C80097CC1E /* ControlButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +67,13 @@
 		D19A357A2EB3DAD400CF95B8 /* PomodoroState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PomodoroState.swift; sourceTree = "<group>"; };
 		D19A357C2EB3DAEA00CF95B8 /* CycleType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CycleType.swift; sourceTree = "<group>"; };
 		D1C4F94E2EB4347C0098A203 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		D1C9956A2EB656C10097CC1E /* PomodoroControlsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PomodoroControlsView.swift; sourceTree = "<group>"; };
+		D1C9956C2EB65B390097CC1E /* FlipClockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlipClockView.swift; sourceTree = "<group>"; };
+		D1C9956E2EB65B6C0097CC1E /* FlipDigitBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlipDigitBox.swift; sourceTree = "<group>"; };
+		D1C995702EB65B9A0097CC1E /* FlipDigit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlipDigit.swift; sourceTree = "<group>"; };
+		D1C995722EB65C450097CC1E /* StatusPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusPanel.swift; sourceTree = "<group>"; };
+		D1C995742EB696D10097CC1E /* AppConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstants.swift; sourceTree = "<group>"; };
+		D1C995772EB6A2C80097CC1E /* ControlButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,9 +172,9 @@
 		D19A35652EB3ABF800CF95B8 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				D1C4F94E2EB4347C0098A203 /* SettingsView.swift */,
+				D1C9957C2EB6A3160097CC1E /* PomodoroView */,
+				D1C9957D2EB6A32D0097CC1E /* SettingsView */,
 				D194BEA12EB3A915009C8D4F /* ContentView.swift */,
-				D19A35722EB3C86800CF95B8 /* PomodoroView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -168,6 +182,7 @@
 		D19A35662EB3AC0A00CF95B8 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				D1C995742EB696D10097CC1E /* AppConstants.swift */,
 				D19A356E2EB3BCEB00CF95B8 /* UserSettings.swift */,
 				D19A357A2EB3DAD400CF95B8 /* PomodoroState.swift */,
 				D19A357C2EB3DAEA00CF95B8 /* CycleType.swift */,
@@ -197,6 +212,44 @@
 				D19A356C2EB3BAEC00CF95B8 /* PomodoroViewModel.swift */,
 			);
 			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		D1C995762EB6A2B00097CC1E /* FlipClock */ = {
+			isa = PBXGroup;
+			children = (
+				D1C995702EB65B9A0097CC1E /* FlipDigit.swift */,
+				D1C9956E2EB65B6C0097CC1E /* FlipDigitBox.swift */,
+				D1C9956C2EB65B390097CC1E /* FlipClockView.swift */,
+			);
+			path = FlipClock;
+			sourceTree = "<group>";
+		};
+		D1C995792EB6A2EC0097CC1E /* ControlsView */ = {
+			isa = PBXGroup;
+			children = (
+				D1C9956A2EB656C10097CC1E /* PomodoroControlsView.swift */,
+				D1C995772EB6A2C80097CC1E /* ControlButton.swift */,
+			);
+			path = ControlsView;
+			sourceTree = "<group>";
+		};
+		D1C9957C2EB6A3160097CC1E /* PomodoroView */ = {
+			isa = PBXGroup;
+			children = (
+				D1C995792EB6A2EC0097CC1E /* ControlsView */,
+				D1C995762EB6A2B00097CC1E /* FlipClock */,
+				D19A35722EB3C86800CF95B8 /* PomodoroView.swift */,
+				D1C995722EB65C450097CC1E /* StatusPanel.swift */,
+			);
+			path = PomodoroView;
+			sourceTree = "<group>";
+		};
+		D1C9957D2EB6A32D0097CC1E /* SettingsView */ = {
+			isa = PBXGroup;
+			children = (
+				D1C4F94E2EB4347C0098A203 /* SettingsView.swift */,
+			);
+			path = SettingsView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -332,12 +385,19 @@
 			files = (
 				D194BEA22EB3A915009C8D4F /* ContentView.swift in Sources */,
 				D19A35772EB3CB2400CF95B8 /* Extensions.swift in Sources */,
+				D1C9956F2EB65B6D0097CC1E /* FlipDigitBox.swift in Sources */,
 				D19A356F2EB3BCEB00CF95B8 /* UserSettings.swift in Sources */,
+				D1C995752EB696D70097CC1E /* AppConstants.swift in Sources */,
 				D1C4F94F2EB434840098A203 /* SettingsView.swift in Sources */,
+				D1C9956D2EB65B3A0097CC1E /* FlipClockView.swift in Sources */,
 				D19A35732EB3C86800CF95B8 /* PomodoroView.swift in Sources */,
 				D19A357D2EB3DAEB00CF95B8 /* CycleType.swift in Sources */,
+				D1C995732EB65C460097CC1E /* StatusPanel.swift in Sources */,
 				D194BEA02EB3A915009C8D4F /* MyPomodoroApp.swift in Sources */,
+				D1C995782EB6A2C90097CC1E /* ControlButton.swift in Sources */,
+				D1C9956B2EB656C30097CC1E /* PomodoroControlsView.swift in Sources */,
 				D19A356D2EB3BAEC00CF95B8 /* PomodoroViewModel.swift in Sources */,
+				D1C995712EB65B9E0097CC1E /* FlipDigit.swift in Sources */,
 				D19A357B2EB3DAD400CF95B8 /* PomodoroState.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

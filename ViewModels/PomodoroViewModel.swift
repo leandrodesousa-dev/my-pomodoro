@@ -9,10 +9,31 @@ final class PomodoroViewModel: ObservableObject {
     @Published var cyclesCompleted: Int = 0
     
     // MARK: - AppStorage Properties
-    @AppStorage("focusDuration") var focusDuration: TimeInterval = AppSettings.defaultFocusDuration
-    @AppStorage("shortBreakDuration") var shortBreakDuration: TimeInterval = AppSettings.defaultShortBreakDuration
-    @AppStorage("longBreakDuration") var longBreakDuration: TimeInterval = AppSettings.defaultLongBreakDuration
-    @AppStorage("cyclesBeforeLongBreak") var cyclesBeforeLongBreak: Int = AppSettings.defaultCyclesBeforeLongBreak
+    @AppStorage("focusDuration") var focusDuration: TimeInterval = AppConstants.Duration.defaultFocusDuration
+    @AppStorage("shortBreakDuration") var shortBreakDuration: TimeInterval = AppConstants.Duration.defaultShortBreakDuration
+    @AppStorage("longBreakDuration") var longBreakDuration: TimeInterval = AppConstants.Duration.defaultLongBreakDuration
+    @AppStorage("cyclesBeforeLongBreak") var cyclesBeforeLongBreak: Int = AppConstants.Duration.defaultCyclesBeforeLongBreak
+    
+    var timeString: String {
+        let totalSeconds = Int(timeRemaining)
+        let minutes = (totalSeconds / 60) % 60
+        let seconds = totalSeconds % 60
+        return String(format: "%02d%02d", minutes, seconds)
+    }
+    
+    var statusText: String {
+        let currentCycle = (cyclesCompleted % cyclesBeforeLongBreak) + 1
+        return "Cycle • \(currentCycle) of \(cyclesBeforeLongBreak)"
+    }
+    
+    var nextBreakText: String {
+        if cyclesCompleted % cyclesBeforeLongBreak == cyclesBeforeLongBreak - 1 {
+            return "Next: Long Break 15:00"
+        } else {
+            let minutes = Int(shortBreakDuration / 60)
+            return "Next: Short Break \(minutes):00"
+        }
+    }
     
     // MARK: - Properties
     private var timer: Timer?
@@ -40,7 +61,7 @@ final class PomodoroViewModel: ObservableObject {
         
         RunLoop.current.add(timer!, forMode: .common)
     }
-
+    
     func pauseTimer() {
         guard state == .running else { return }
         state = .paused
@@ -68,6 +89,14 @@ final class PomodoroViewModel: ObservableObject {
         backgroundTime = nil
     }
     
+    func skipBreak() {
+        if currentCycleType != .focus {
+            currentCycleType = .focus
+            timeRemaining = 1500
+            state = .stopped
+        }
+    }
+    
     // MARK: - Time Methods
     @objc private func updateTime() {
         DispatchQueue.main.async {
@@ -89,7 +118,7 @@ final class PomodoroViewModel: ObservableObject {
             timeRemaining = longBreakDuration
         }
     }
-
+    
     private func endCycle() {
         timer?.invalidate()
         
@@ -117,25 +146,25 @@ final class PomodoroViewModel: ObservableObject {
     private func vibrateForCycleEnd() {
         UIImpactFeedbackGenerator(style: .medium).impactOccurred()
     }
-
+    
     // MARK: - Scene Phase Methods
     func handleAppBackground() {
         guard state == .running else { return }
         self.backgroundTime = Date()
         scheduleBackgroundNotification()
     }
-
+    
     func handleAppActive() {
         cancelAllNotifications()
         reconcileTime()
     }
-
+    
     private func reconcileTime() {
         guard let savedBackgroundTime = backgroundTime, state == .running else {
             self.backgroundTime = nil
             return
         }
-
+        
         let timePassedInBackground = Date().timeIntervalSince(savedBackgroundTime)
         self.timeRemaining -= timePassedInBackground
         self.backgroundTime = nil
@@ -160,7 +189,7 @@ final class PomodoroViewModel: ObservableObject {
         
         let finishDate = Date().addingTimeInterval(timeRemaining)
         let timeInterval = finishDate.timeIntervalSinceNow
-
+        
         let requestNotification = setupNotificationRequest(timeInterval, "PomodoroEnd_\(UUID().uuidString)")
         setupUserNotificationCenter(requestNotification, for: timeInterval)
         timer?.invalidate()
