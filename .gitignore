@@ -21,9 +21,9 @@ DerivedData/
 # Caches de Módulos (DerivedData)
 DerivedData/
 
-# Arquivos de usuário e interface (O seu arquivo específico)
-*.xcuserdatad
-*.xcuserdatad/UserInterfaceState.xcuserstate
+# Arquivos de usuário e interface
+*.xcodeproj/xcuserdata/
+*.xcworkspace/xcuserdata/
 
 # Workspaces e Project.xcworkspace
 *.xcworkspace/

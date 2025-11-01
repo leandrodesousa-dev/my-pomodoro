@@ -12,7 +12,7 @@ struct MyPomodoroApp: App {
                 .environmentObject(pomodoroViewModel)
         }
         
-        .onChange(of: scenePhase) { newPhase in
+        .onChange(of: scenePhase) { oldPhase, newPhase in
             switch newPhase {
             case .background:
                 pomodoroViewModel.handleAppBackground()
