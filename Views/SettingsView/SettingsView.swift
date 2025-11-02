@@ -9,8 +9,8 @@ struct SettingsView: View {
                 Section(header: Text("Duração do Foco")) {
                     Slider(
                         value: $pomodoroViewModel.focusDuration,
-                        in: 5*60...60*60,
-                        step: 5*60
+                        in: 0.0635*60...60*60,
+                        step: 0.0635*60
                     ) {
                         Text("Tempo de Foco")
                     }

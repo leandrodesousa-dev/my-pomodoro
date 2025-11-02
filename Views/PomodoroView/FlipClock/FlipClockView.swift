@@ -6,7 +6,7 @@ struct FlipClockView: View {
     
     var boxWidth: CGFloat {
         let totalMinSecWidth = 2.0
-        let totalPomodoroViewPadding = AppConstants.UI.standardHorizontalPadding * 2
+        let totalPomodoroViewPadding = AppConstants.UI.standardPadding * 2
         
         return (availableWidth - AppConstants.UI.flipClockSpacing - totalPomodoroViewPadding) / totalMinSecWidth
     }
