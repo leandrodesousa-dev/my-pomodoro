@@ -92,7 +92,7 @@ final class PomodoroViewModel: ObservableObject {
     func skipBreak() {
         if currentCycleType != .focus {
             currentCycleType = .focus
-            timeRemaining = 1500
+            timeRemaining = focusDuration
             state = .stopped
         }
     }
@@ -102,6 +102,10 @@ final class PomodoroViewModel: ObservableObject {
         DispatchQueue.main.async {
             if self.timeRemaining > 0 {
                 self.timeRemaining -= 1
+                if self.timeRemaining <= 0 {
+                    self.timeRemaining = 0
+                    self.endCycle()
+                }
             } else {
                 self.endCycle()
             }

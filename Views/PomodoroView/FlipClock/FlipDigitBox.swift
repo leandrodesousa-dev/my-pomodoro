@@ -11,8 +11,9 @@ struct FlipDigitBox: View {
     
     var body: some View {
         HStack(spacing: AppConstants.UI.interDigitSpacing) {
-            ForEach(Array(digit), id: \.self) { character in
-                FlipDigit(character: character, calculatedWidth: digitWidth)
+            let characters = Array(digit)
+            ForEach(characters.indices, id: \.self) { index in
+                FlipDigit(character: characters[index], calculatedWidth: digitWidth)
             }
         }
         .frame(width: totalBoxWidth)

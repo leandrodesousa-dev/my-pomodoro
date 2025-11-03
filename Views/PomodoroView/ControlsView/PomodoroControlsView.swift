@@ -12,7 +12,7 @@ struct PomodoroControlsView: View {
                         ControlButton(
                             title: "Pause",
                             iconName: "pause.fill",
-                            backgroundColor: Color(.systemGray5),
+                            backgroundColor: .red,
                             foregroundColor: .primary,
                             action: pomodoroViewModel.pauseTimer
                         )
