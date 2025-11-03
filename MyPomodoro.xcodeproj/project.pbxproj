@@ -235,8 +235,8 @@
 			children = (
 				D1C995792EB6A2EC0097CC1E /* ControlsView */,
 				D1C995762EB6A2B00097CC1E /* FlipClock */,
+				D1DBFBC42EB8D8D300079338 /* StatusPanel */,
 				D19A35722EB3C86800CF95B8 /* PomodoroView.swift */,
-				D1C995722EB65C450097CC1E /* StatusPanel.swift */,
 			);
 			path = PomodoroView;
 			sourceTree = "<group>";
@@ -247,6 +247,14 @@
 				D1C4F94E2EB4347C0098A203 /* SettingsView.swift */,
 			);
 			path = SettingsView;
+			sourceTree = "<group>";
+		};
+		D1DBFBC42EB8D8D300079338 /* StatusPanel */ = {
+			isa = PBXGroup;
+			children = (
+				D1C995722EB65C450097CC1E /* StatusPanel.swift */,
+			);
+			path = StatusPanel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

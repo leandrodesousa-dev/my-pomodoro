@@ -234,7 +234,6 @@ final class PomodoroViewModel: ObservableObject {
         if cyclesCompleted % cyclesBeforeLongBreak == cyclesBeforeLongBreak - 1 {
             return "Próximo: Pausa Longa \(longBreakDuration.asTimerString)"
         } else {
-            print("PAUSA CURTA: \(shortBreakDuration)")
             return "Próximo: Pausa Curta \(shortBreakDuration.asTimerString)"
         }
     }

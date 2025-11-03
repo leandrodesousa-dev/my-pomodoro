@@ -1,50 +1,126 @@
 import SwiftUI
 
 struct SettingsView: View {
+    // MARK: - Properites
     @EnvironmentObject var pomodoroViewModel: PomodoroViewModel
-
+    
+    @State private var focusValue: String = ""
+    @State private var focusUnit: FocusUnit = .minutes
+    
+    @State private var shortBreakValue: String = ""
+    @State private var shortBreakUnit: BreakUnit = .minutes
+    
+    @State private var longBreakValue: String = ""
+    @State private var longBreakUnit: BreakUnit = .minutes
+    
+    // MARK: - Body
     var body: some View {
         NavigationView {
             List {
-                Section(header: Text("Duração do Foco")) {
-                    Slider(
-                        value: $pomodoroViewModel.focusDuration,
-                        in: 0.0635*60...60*60,
-                        step: 0.0635*60
-                    ) {
-                        Text("Tempo de Foco")
+                Section(header: Text("Duração de Foco")) {
+                    HStack(spacing: 12) {
+                        TextField("0", text: $focusValue)
+                            .keyboardType(.numberPad)
+                            .multilineTextAlignment(.leading)
+                            .padding(10)
+                            .background(Color(.secondarySystemBackground))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .stroke(Color(.separator), lineWidth: 1)
+                            )
+                            .cornerRadius(10)
+                        Picker("Unit", selection: $focusUnit) {
+                            Text("sec").tag(FocusUnit.seconds)
+                            Text("min").tag(FocusUnit.minutes)
+                            Text("hr").tag(FocusUnit.hours)
+                        }
+                        .pickerStyle(.segmented)
                     }
-                    
+                    .onChange(of: focusValue) { oldFocusValue, newFocusValue in
+                        if let finalFocusTime = getValueFromFinalFocusTime(from: focusValue, unit: focusUnit), finalFocusTime > 0 {
+                            pomodoroViewModel.focusDuration = finalFocusTime
+                        }
+                    }
+                    .onChange(of: focusUnit) { oldFocusUnit, newFocusUnit in
+                        if let finalFocusTime = getValueFromFinalFocusTime(from: focusValue, unit: focusUnit), finalFocusTime > 0 {
+                            pomodoroViewModel.focusDuration = finalFocusTime
+                        }
+                    }
+
                     HStack {
-                        Text("Duração atual:")
+                        Text("Tempo Final:")
                         Spacer()
                         Text(pomodoroViewModel.focusDuration.asTimerString)
                             .fontWeight(.semibold)
                     }
                 }
                 
-                Section(header: Text("Intervalo Curto")) {
-                    Slider(
-                        value: $pomodoroViewModel.shortBreakDuration,
-                        in: 1*60...15*60,
-                        step: 1*60
-                    )
+                Section(header: Text("Pausa Curta")) {
+                    HStack(spacing: 12) {
+                        TextField("0", text: $shortBreakValue)
+                            .keyboardType(.numberPad)
+                            .multilineTextAlignment(.leading)
+                            .padding(10)
+                            .background(Color(.secondarySystemBackground))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .stroke(Color(.separator), lineWidth: 1)
+                            )
+                            .cornerRadius(10)
+                        Picker("Unit", selection: $shortBreakUnit) {
+                            Text("sec").tag(BreakUnit.seconds)
+                            Text("min").tag(BreakUnit.minutes)
+                        }
+                        .pickerStyle(.segmented)
+                    }
+                    .onChange(of: shortBreakValue) { oldShortBreakValue, newShortBreakValue in
+                        if let finalPauseTime = getValueOfFinalPauseTime(from: shortBreakValue, unit: shortBreakUnit), finalPauseTime > 0 {
+                            pomodoroViewModel.shortBreakDuration = finalPauseTime
+                        }
+                    }
+                    .onChange(of: shortBreakUnit) { oldShortBreakUnit, newShortBreakUnit in
+                        if let finalPauseTime = getValueOfFinalPauseTime(from: shortBreakValue, unit: shortBreakUnit), finalPauseTime > 0 {
+                            pomodoroViewModel.shortBreakDuration = finalPauseTime
+                        }
+                    }
                     HStack {
-                        Text("Duração atual:")
+                        Text("Tempo Final:")
                         Spacer()
                         Text(pomodoroViewModel.shortBreakDuration.asTimerString)
                             .fontWeight(.semibold)
                     }
                 }
                 
-                Section(header: Text("Intervalo Longo")) {
-                    Slider(
-                        value: $pomodoroViewModel.longBreakDuration,
-                        in: 5*60...30*60,
-                        step: 5*60
-                    )
+                Section(header: Text("Puasa Longa")) {
+                    HStack(spacing: 12) {
+                        TextField("0", text: $longBreakValue)
+                            .keyboardType(.numberPad)
+                            .multilineTextAlignment(.leading)
+                            .padding(10)
+                            .background(Color(.secondarySystemBackground))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .stroke(Color(.separator), lineWidth: 1)
+                            )
+                            .cornerRadius(10)
+                        Picker("Unit", selection: $longBreakUnit) {
+                            Text("sec").tag(BreakUnit.seconds)
+                            Text("min").tag(BreakUnit.minutes)
+                        }
+                        .pickerStyle(.segmented)
+                    }
+                    .onChange(of: longBreakValue) { oldLongBreakValue, newLongBreakValue in
+                        if let finalPauseTime = getValueOfFinalPauseTime(from: longBreakValue, unit: longBreakUnit), finalPauseTime > 0 {
+                            pomodoroViewModel.longBreakDuration = finalPauseTime
+                        }
+                    }
+                    .onChange(of: longBreakUnit) { oldLongBreakUnit, newLongBreakUnit in
+                        if let finalPauseTime = getValueOfFinalPauseTime(from: longBreakValue, unit: longBreakUnit), finalPauseTime > 0 {
+                            pomodoroViewModel.longBreakDuration = finalPauseTime
+                        }
+                    }
                     HStack {
-                        Text("Duração atual:")
+                        Text("Tempo Final:")
                         Spacer()
                         Text(pomodoroViewModel.longBreakDuration.asTimerString)
                             .fontWeight(.semibold)
@@ -52,12 +128,72 @@ struct SettingsView: View {
                 }
                 
                 Section(header: Text("Ciclos")) {
-                    Stepper("Ciclos para Intervalo Longo: \(pomodoroViewModel.cyclesBeforeLongBreak)",
+                    Stepper("Ciclos completos: \(pomodoroViewModel.cyclesBeforeLongBreak)",
                             value: $pomodoroViewModel.cyclesBeforeLongBreak,
                             in: 2...8)
                 }
             }
             .navigationTitle("Configurações")
+            .onAppear {
+                let (focusValue, focusUnit) = splitFocus(time: pomodoroViewModel.focusDuration)
+                self.focusValue = focusValue
+                self.focusUnit = focusUnit
+                
+                let (shortBreakValue, shortBreakUnit) = splitBreak(time: pomodoroViewModel.shortBreakDuration)
+                self.shortBreakValue = shortBreakValue
+                self.shortBreakUnit = shortBreakUnit
+                
+                let (longBreakValue, longBreakUnit) = splitBreak(time: pomodoroViewModel.longBreakDuration)
+                self.longBreakValue = longBreakValue
+                self.longBreakUnit = longBreakUnit
+            }
+        }
+    }
+    
+    // MARK: - Models
+    private enum FocusUnit: String, CaseIterable, Identifiable {
+        case seconds, minutes, hours;
+        var id: String { rawValue }
+    }
+    
+    private enum BreakUnit: String, CaseIterable, Identifiable {
+        case seconds, minutes;
+        var id: String { rawValue }
+    }
+    
+    // MARK: - Private Methods
+    private func getValueFromFinalFocusTime(from value: String, unit: FocusUnit) -> TimeInterval? {
+        guard let number = Double(value.replacingOccurrences(of: ",", with: ".")) else { return nil }
+        switch unit {
+        case .seconds: return number
+        case .minutes: return number * 60
+        case .hours:   return number * 3600
+        }
+    }
+    
+    private func getValueOfFinalPauseTime(from value: String, unit: BreakUnit) -> TimeInterval? {
+        guard let number = Double(value.replacingOccurrences(of: ",", with: ".")) else { return nil }
+        switch unit {
+        case .seconds: return number
+        case .minutes: return number * 60
+        }
+    }
+    
+    private func splitFocus(time: TimeInterval) -> (String, FocusUnit) {
+        if time >= 3600, time.truncatingRemainder(dividingBy: 3600) == 0 {
+            return (String(Int(time / 3600)), .hours)
+        } else if time >= 60, time.truncatingRemainder(dividingBy: 60) == 0 {
+            return (String(Int(time / 60)), .minutes)
+        } else {
+            return (String(Int(time)), .seconds)
+        }
+    }
+    
+    private func splitBreak(time: TimeInterval) -> (String, BreakUnit) {
+        if time >= 60, time.truncatingRemainder(dividingBy: 60) == 0 {
+            return (String(Int(time / 60)), .minutes)
+        } else {
+            return (String(Int(time)), .seconds)
         }
     }
 }
