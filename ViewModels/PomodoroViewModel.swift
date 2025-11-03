@@ -9,9 +9,27 @@ final class PomodoroViewModel: ObservableObject {
     @Published var cyclesCompleted: Int = 0
     
     // MARK: - AppStorage Properties
-    @AppStorage("focusDuration") var focusDuration: TimeInterval = AppConstants.Duration.defaultFocusDuration
-    @AppStorage("shortBreakDuration") var shortBreakDuration: TimeInterval = AppConstants.Duration.defaultShortBreakDuration
-    @AppStorage("longBreakDuration") var longBreakDuration: TimeInterval = AppConstants.Duration.defaultLongBreakDuration
+    @AppStorage("focusDuration") var focusDuration: TimeInterval = AppConstants.Duration.defaultFocusDuration {
+        didSet {
+            if currentCycleType == .focus {
+                timeRemaining = focusDuration
+            }
+        }
+    }
+    @AppStorage("shortBreakDuration") var shortBreakDuration: TimeInterval = AppConstants.Duration.defaultShortBreakDuration {
+        didSet {
+            if currentCycleType == .shortBreak {
+                timeRemaining = shortBreakDuration
+            }
+        }
+    }
+    @AppStorage("longBreakDuration") var longBreakDuration: TimeInterval = AppConstants.Duration.defaultLongBreakDuration {
+        didSet {
+            if currentCycleType == .longBreak {
+                timeRemaining = longBreakDuration
+            }
+        }
+    }
     @AppStorage("cyclesBeforeLongBreak") var cyclesBeforeLongBreak: Int = AppConstants.Duration.defaultCyclesBeforeLongBreak
     @AppStorage("autoStartFocus") var autoStartFocus: Bool = AppConstants.GeneralConstants.defaultAutoStartFocus
     @AppStorage("autoStartBreaks") var autoStartBreaks: Bool = AppConstants.GeneralConstants.defaultAutoStartBreaks
@@ -29,8 +47,8 @@ final class PomodoroViewModel: ObservableObject {
     
     // MARK: Actions Buttons
     func startTimer() {
-        guard state != .running else { return }
-        
+        if state == .running && timer != nil { return }
+
         if state == .stopped {
             setInitialTime()
         }
@@ -40,8 +58,10 @@ final class PomodoroViewModel: ObservableObject {
         timer?.invalidate()
         
         timer = Timer(timeInterval: 1.0, target: self, selector: #selector(updateTime), userInfo: nil, repeats: true)
-        
-        RunLoop.current.add(timer!, forMode: .common)
+
+        if let timer = timer {
+            RunLoop.current.add(timer, forMode: .common)
+        }
     }
     
     func pauseTimer() {
@@ -73,9 +93,16 @@ final class PomodoroViewModel: ObservableObject {
     
     func skipBreak() {
         if currentCycleType != .focus {
+            timer?.invalidate()
             currentCycleType = .focus
             timeRemaining = focusDuration
-            state = .stopped
+            if autoStartFocus {
+                state = .stopped
+                startTimer()
+            } else {
+                state = .stopped
+            }
+            cancelAllNotifications()
         }
     }
     
@@ -110,6 +137,7 @@ final class PomodoroViewModel: ObservableObject {
         
         vibrateForCycleEnd()
         
+        var didCompleteSet = false
         var willStartFocusNext = false
         switch currentCycleType {
         case .focus:
@@ -122,13 +150,23 @@ final class PomodoroViewModel: ObservableObject {
                 timeRemaining = shortBreakDuration
             }
         case .shortBreak, .longBreak:
+            if currentCycleType == .longBreak {
+                didCompleteSet = true
+            }
+            
             currentCycleType = .focus
             timeRemaining = focusDuration
             willStartFocusNext = true
         }
         
-        let shouldAutoStart: Bool = (willStartFocusNext && autoStartFocus) || (!willStartFocusNext && autoStartBreaks)
+        var shouldAutoStart: Bool = (willStartFocusNext && autoStartFocus) || (!willStartFocusNext && autoStartBreaks)
+        
+        if didCompleteSet {
+            shouldAutoStart = false
+        }
+        
         if shouldAutoStart {
+            state = .stopped
             startTimer()
         } else {
             setInitialTime()
