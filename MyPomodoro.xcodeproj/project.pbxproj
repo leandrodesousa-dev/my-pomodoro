@@ -16,7 +16,6 @@
 		D19A35642EB3ABD700CF95B8 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D19A35622EB3ABD700CF95B8 /* Preview Assets.xcassets */; };
 		D19A356A2EB3AC7D00CF95B8 /* project_structure.md in Resources */ = {isa = PBXBuildFile; fileRef = D19A35692EB3AC7D00CF95B8 /* project_structure.md */; };
 		D19A356D2EB3BAEC00CF95B8 /* PomodoroViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19A356C2EB3BAEC00CF95B8 /* PomodoroViewModel.swift */; };
-		D19A356F2EB3BCEB00CF95B8 /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19A356E2EB3BCEB00CF95B8 /* UserSettings.swift */; };
 		D19A35732EB3C86800CF95B8 /* PomodoroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19A35722EB3C86800CF95B8 /* PomodoroView.swift */; };
 		D19A35772EB3CB2400CF95B8 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19A35762EB3CB2400CF95B8 /* Extensions.swift */; };
 		D19A357B2EB3DAD400CF95B8 /* PomodoroState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D19A357A2EB3DAD400CF95B8 /* PomodoroState.swift */; };
@@ -61,7 +60,6 @@
 		D19A35622EB3ABD700CF95B8 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		D19A35692EB3AC7D00CF95B8 /* project_structure.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = project_structure.md; sourceTree = "<group>"; };
 		D19A356C2EB3BAEC00CF95B8 /* PomodoroViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PomodoroViewModel.swift; sourceTree = "<group>"; };
-		D19A356E2EB3BCEB00CF95B8 /* UserSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSettings.swift; sourceTree = "<group>"; };
 		D19A35722EB3C86800CF95B8 /* PomodoroView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PomodoroView.swift; sourceTree = "<group>"; };
 		D19A35762EB3CB2400CF95B8 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		D19A357A2EB3DAD400CF95B8 /* PomodoroState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PomodoroState.swift; sourceTree = "<group>"; };
@@ -183,7 +181,6 @@
 			isa = PBXGroup;
 			children = (
 				D1C995742EB696D10097CC1E /* AppConstants.swift */,
-				D19A356E2EB3BCEB00CF95B8 /* UserSettings.swift */,
 				D19A357A2EB3DAD400CF95B8 /* PomodoroState.swift */,
 				D19A357C2EB3DAEA00CF95B8 /* CycleType.swift */,
 			);
@@ -386,7 +383,6 @@
 				D194BEA22EB3A915009C8D4F /* ContentView.swift in Sources */,
 				D19A35772EB3CB2400CF95B8 /* Extensions.swift in Sources */,
 				D1C9956F2EB65B6D0097CC1E /* FlipDigitBox.swift in Sources */,
-				D19A356F2EB3BCEB00CF95B8 /* UserSettings.swift in Sources */,
 				D1C995752EB696D70097CC1E /* AppConstants.swift in Sources */,
 				D1C4F94F2EB434840098A203 /* SettingsView.swift in Sources */,
 				D1C9956D2EB65B3A0097CC1E /* FlipClockView.swift in Sources */,

@@ -12,7 +12,7 @@ struct PomodoroView: View {
             GeometryReader { geo in
                 VStack {
                     FlipClockView(
-                        timeString: pomodoroViewModel.timeString,
+                        timeString: pomodoroViewModel.timeRemaining.asTimerStringWithoutTwoPoints,
                         availableWidth: geo.size.width
                     )
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -20,7 +20,6 @@ struct PomodoroView: View {
             }
 
             StatusPanel()
-                .padding(.horizontal)
                 .padding(.bottom, 40)
             
             PomodoroControlsView()

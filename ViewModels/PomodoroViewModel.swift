@@ -13,28 +13,7 @@ final class PomodoroViewModel: ObservableObject {
     @AppStorage("shortBreakDuration") var shortBreakDuration: TimeInterval = AppConstants.Duration.defaultShortBreakDuration
     @AppStorage("longBreakDuration") var longBreakDuration: TimeInterval = AppConstants.Duration.defaultLongBreakDuration
     @AppStorage("cyclesBeforeLongBreak") var cyclesBeforeLongBreak: Int = AppConstants.Duration.defaultCyclesBeforeLongBreak
-    
-    var timeString: String {
-        let totalSeconds = Int(timeRemaining)
-        let minutes = (totalSeconds / 60) % 60
-        let seconds = totalSeconds % 60
-        return String(format: "%02d%02d", minutes, seconds)
-    }
-    
-    var statusText: String {
-        let currentCycle = (cyclesCompleted % cyclesBeforeLongBreak) + 1
-        return "Cycle • \(currentCycle) of \(cyclesBeforeLongBreak)"
-    }
-    
-    var nextBreakText: String {
-        if cyclesCompleted % cyclesBeforeLongBreak == cyclesBeforeLongBreak - 1 {
-            return "Next: Long Break 15:00"
-        } else {
-            let minutes = Int(shortBreakDuration / 60)
-            return "Next: Short Break \(minutes):00"
-        }
-    }
-    
+
     // MARK: - Properties
     private var timer: Timer?
     private var startTime: Date?
@@ -242,6 +221,21 @@ final class PomodoroViewModel: ObservableObject {
             } else {
                 print("Notificação agendada para daqui a \(Int(duration)) segundos.")
             }
+        }
+    }
+    
+    // MARK: SatusPanel
+    var statusText: String {
+        let currentCycle = (cyclesCompleted % cyclesBeforeLongBreak) + 1
+        return "Ciclos • \(currentCycle) de \(cyclesBeforeLongBreak)"
+    }
+    
+    var nextBreakText: String {
+        if cyclesCompleted % cyclesBeforeLongBreak == cyclesBeforeLongBreak - 1 {
+            return "Próximo: Pausa Longa \(longBreakDuration.asTimerString)"
+        } else {
+            print("PAUSA CURTA: \(shortBreakDuration)")
+            return "Próximo: Pausa Curta \(shortBreakDuration.asTimerString)"
         }
     }
 }
