@@ -17,6 +17,22 @@ struct SettingsView: View {
     var body: some View {
         NavigationView {
             List {
+                if pomodoroViewModel.state != .paused {
+                    Section {
+                        HStack(alignment: .top, spacing: 12) {
+                            Image(systemName: "lock.fill")
+                                .foregroundColor(.yellow)
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text("Configurações bloqueadas")
+                                    .fontWeight(.semibold)
+                                Text("Edite as configurações apenas quando o timer estiver pausado.")
+                                    .foregroundColor(.secondary)
+                            }
+                        }
+                        .padding(.vertical, 4)
+                    }
+                }
+                
                 Section(header: Text("Duração de Foco")) {
                     HStack(spacing: 12) {
                         TextField("0", text: $focusValue)
@@ -155,6 +171,7 @@ struct SettingsView: View {
                 }
             }
             .navigationTitle("Configurações")
+            .disabled(pomodoroViewModel.state != .paused)
             .onAppear {
                 let (focusValue, focusUnit) = splitFocus(time: pomodoroViewModel.focusDuration)
                 self.focusValue = focusValue
