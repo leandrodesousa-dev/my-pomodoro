@@ -36,12 +36,12 @@ struct SettingsView: View {
                         }
                         .pickerStyle(.segmented)
                     }
-                    .onChange(of: focusValue) { oldFocusValue, newFocusValue in
+                    .onChange(of: focusValue) { _, _ in
                         if let finalFocusTime = getValueFromFinalFocusTime(from: focusValue, unit: focusUnit), finalFocusTime > 0 {
                             pomodoroViewModel.focusDuration = finalFocusTime
                         }
                     }
-                    .onChange(of: focusUnit) { oldFocusUnit, newFocusUnit in
+                    .onChange(of: focusUnit) { _, _ in
                         if let finalFocusTime = getValueFromFinalFocusTime(from: focusValue, unit: focusUnit), finalFocusTime > 0 {
                             pomodoroViewModel.focusDuration = finalFocusTime
                         }
@@ -73,12 +73,12 @@ struct SettingsView: View {
                         }
                         .pickerStyle(.segmented)
                     }
-                    .onChange(of: shortBreakValue) { oldShortBreakValue, newShortBreakValue in
+                    .onChange(of: shortBreakValue) { _, _ in
                         if let finalPauseTime = getValueOfFinalPauseTime(from: shortBreakValue, unit: shortBreakUnit), finalPauseTime > 0 {
                             pomodoroViewModel.shortBreakDuration = finalPauseTime
                         }
                     }
-                    .onChange(of: shortBreakUnit) { oldShortBreakUnit, newShortBreakUnit in
+                    .onChange(of: shortBreakUnit) { _, _ in
                         if let finalPauseTime = getValueOfFinalPauseTime(from: shortBreakValue, unit: shortBreakUnit), finalPauseTime > 0 {
                             pomodoroViewModel.shortBreakDuration = finalPauseTime
                         }
@@ -109,12 +109,12 @@ struct SettingsView: View {
                         }
                         .pickerStyle(.segmented)
                     }
-                    .onChange(of: longBreakValue) { oldLongBreakValue, newLongBreakValue in
+                    .onChange(of: longBreakValue) { _, _ in
                         if let finalPauseTime = getValueOfFinalPauseTime(from: longBreakValue, unit: longBreakUnit), finalPauseTime > 0 {
                             pomodoroViewModel.longBreakDuration = finalPauseTime
                         }
                     }
-                    .onChange(of: longBreakUnit) { oldLongBreakUnit, newLongBreakUnit in
+                    .onChange(of: longBreakUnit) { _, _ in
                         if let finalPauseTime = getValueOfFinalPauseTime(from: longBreakValue, unit: longBreakUnit), finalPauseTime > 0 {
                             pomodoroViewModel.longBreakDuration = finalPauseTime
                         }
@@ -131,6 +131,27 @@ struct SettingsView: View {
                     Stepper("Ciclos completos: \(pomodoroViewModel.cyclesBeforeLongBreak)",
                             value: $pomodoroViewModel.cyclesBeforeLongBreak,
                             in: 2...8)
+                }
+
+                Section(header: Text("Execução Automática & Notificações")) {
+                    Toggle(isOn: $pomodoroViewModel.autoStartFocus) {
+                        Text("Início automático do Foco")
+                    }
+
+                    Toggle(isOn: $pomodoroViewModel.autoStartBreaks) {
+                        Text("Início automático das Pausas")
+                    }
+
+                    Toggle(isOn: $pomodoroViewModel.notificationsEnabled) {
+                        Text("Notificações")
+                    }
+                    .onChange(of: pomodoroViewModel.notificationsEnabled) { _, isEnabled in
+                        if isEnabled {
+                            pomodoroViewModel.setupSystemFeatures()
+                        } else {
+                            pomodoroViewModel.cancelAllNotifications()
+                        }
+                    }
                 }
             }
             .navigationTitle("Configurações")

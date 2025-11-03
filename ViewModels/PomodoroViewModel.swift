@@ -13,6 +13,9 @@ final class PomodoroViewModel: ObservableObject {
     @AppStorage("shortBreakDuration") var shortBreakDuration: TimeInterval = AppConstants.Duration.defaultShortBreakDuration
     @AppStorage("longBreakDuration") var longBreakDuration: TimeInterval = AppConstants.Duration.defaultLongBreakDuration
     @AppStorage("cyclesBeforeLongBreak") var cyclesBeforeLongBreak: Int = AppConstants.Duration.defaultCyclesBeforeLongBreak
+    @AppStorage("autoStartFocus") var autoStartFocus: Bool = AppConstants.GeneralConstants.defaultAutoStartFocus
+    @AppStorage("autoStartBreaks") var autoStartBreaks: Bool = AppConstants.GeneralConstants.defaultAutoStartBreaks
+    @AppStorage("notificationsEnabled") var notificationsEnabled: Bool = AppConstants.GeneralConstants.defaultNotificationsEnabled
 
     // MARK: - Properties
     private var timer: Timer?
@@ -107,6 +110,7 @@ final class PomodoroViewModel: ObservableObject {
         
         vibrateForCycleEnd()
         
+        var willStartFocusNext = false
         switch currentCycleType {
         case .focus:
             cyclesCompleted += 1
@@ -120,10 +124,16 @@ final class PomodoroViewModel: ObservableObject {
         case .shortBreak, .longBreak:
             currentCycleType = .focus
             timeRemaining = focusDuration
+            willStartFocusNext = true
         }
         
-        setInitialTime()
-        state = .stopped
+        let shouldAutoStart: Bool = (willStartFocusNext && autoStartFocus) || (!willStartFocusNext && autoStartBreaks)
+        if shouldAutoStart {
+            startTimer()
+        } else {
+            setInitialTime()
+            state = .stopped
+        }
     }
     
     private func vibrateForCycleEnd() {
@@ -134,11 +144,11 @@ final class PomodoroViewModel: ObservableObject {
     func handleAppBackground() {
         guard state == .running else { return }
         self.backgroundTime = Date()
-        scheduleBackgroundNotification()
+        if notificationsEnabled { scheduleBackgroundNotification() }
     }
     
     func handleAppActive() {
-        cancelAllNotifications()
+        if notificationsEnabled { cancelAllNotifications() }
         reconcileTime()
     }
     
@@ -162,7 +172,7 @@ final class PomodoroViewModel: ObservableObject {
     
     // MARK: - Public Methods Notification
     func setupSystemFeatures() {
-        requestNotificationPermission()
+        if notificationsEnabled { requestNotificationPermission() }
     }
     
     func scheduleBackgroundNotification() {

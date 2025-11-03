@@ -22,6 +22,10 @@ public struct AppConstants {
     struct GeneralConstants {
         static let defaultTimeScaleFactor: CGFloat = 1.5
         static let maxRetryRate: CGFloat = 2.5
+        // Settings defaults
+        static let defaultAutoStartFocus: Bool = false
+        static let defaultAutoStartBreaks: Bool = false
+        static let defaultNotificationsEnabled: Bool = false
     }
     
 }
