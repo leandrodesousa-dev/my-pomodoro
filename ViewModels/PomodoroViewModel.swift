@@ -30,6 +30,7 @@ final class PomodoroViewModel: ObservableObject {
             }
         }
     }
+
     @AppStorage("cyclesBeforeLongBreak") var cyclesBeforeLongBreak: Int = AppConstants.Duration.defaultCyclesBeforeLongBreak
     @AppStorage("autoStartFocus") var autoStartFocus: Bool = AppConstants.GeneralConstants.defaultAutoStartFocus
     @AppStorage("autoStartBreaks") var autoStartBreaks: Bool = AppConstants.GeneralConstants.defaultAutoStartBreaks
@@ -279,10 +280,15 @@ final class PomodoroViewModel: ObservableObject {
     }
     
     var nextBreakText: String {
-        if cyclesCompleted % cyclesBeforeLongBreak == cyclesBeforeLongBreak - 1 {
-            return "Próximo: Pausa Longa \(longBreakDuration.asTimerString)"
-        } else {
-            return "Próximo: Pausa Curta \(shortBreakDuration.asTimerString)"
+        switch currentCycleType {
+        case .focus:
+            if cyclesCompleted % cyclesBeforeLongBreak == cyclesBeforeLongBreak - 1 {
+                return "Próximo: Pausa Longa \(longBreakDuration.asTimerString)"
+            } else {
+                return "Próximo: Pausa Curta \(shortBreakDuration.asTimerString)"
+            }
+        case .shortBreak, .longBreak:
+            return "Próximo: Foco \(focusDuration.asTimerString)"
         }
     }
 }
