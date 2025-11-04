@@ -16,7 +16,7 @@ struct ContentView: View {
                 Group {
                     if isLandscape {
                         VStack(spacing: 16) {
-                            Image(systemName: "iphone.rotated")
+                            Image(systemName: "iphone")
                                 .font(.system(size: 48))
                                 .foregroundColor(.secondary)
                             Text("Configurações disponíveis apenas na orientação vertical")
