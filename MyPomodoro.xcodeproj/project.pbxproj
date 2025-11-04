@@ -29,6 +29,8 @@
 		D1C995752EB696D70097CC1E /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C995742EB696D10097CC1E /* AppConstants.swift */; };
 		D1C995782EB6A2C90097CC1E /* ControlButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C995772EB6A2C80097CC1E /* ControlButton.swift */; };
 		D1DBFBC72EB9045600079338 /* Orientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1DBFBC62EB9045600079338 /* Orientation.swift */; };
+		D1DBFBC92EBA3ABB00079338 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1DBFBC82EBA3ABB00079338 /* SplashView.swift */; };
+		D1DBFBCB2EBA3AEF00079338 /* AppIconProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1DBFBCA2EBA3AEF00079338 /* AppIconProvider.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +76,8 @@
 		D1C995742EB696D10097CC1E /* AppConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstants.swift; sourceTree = "<group>"; };
 		D1C995772EB6A2C80097CC1E /* ControlButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlButton.swift; sourceTree = "<group>"; };
 		D1DBFBC62EB9045600079338 /* Orientation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Orientation.swift; sourceTree = "<group>"; };
+		D1DBFBC82EBA3ABB00079338 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
+		D1DBFBCA2EBA3AEF00079338 /* AppIconProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconProvider.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -172,6 +176,7 @@
 		D19A35652EB3ABF800CF95B8 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				D1DBFBC82EBA3ABB00079338 /* SplashView.swift */,
 				D1C9957C2EB6A3160097CC1E /* PomodoroView */,
 				D1C9957D2EB6A32D0097CC1E /* SettingsView */,
 				D194BEA12EB3A915009C8D4F /* ContentView.swift */,
@@ -192,6 +197,7 @@
 		D19A35672EB3AC1600CF95B8 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				D1DBFBCA2EBA3AEF00079338 /* AppIconProvider.swift */,
 				D1DBFBC62EB9045600079338 /* Orientation.swift */,
 				D19A35762EB3CB2400CF95B8 /* Extensions.swift */,
 			);
@@ -393,6 +399,7 @@
 			files = (
 				D194BEA22EB3A915009C8D4F /* ContentView.swift in Sources */,
 				D19A35772EB3CB2400CF95B8 /* Extensions.swift in Sources */,
+				D1DBFBC92EBA3ABB00079338 /* SplashView.swift in Sources */,
 				D1C9956F2EB65B6D0097CC1E /* FlipDigitBox.swift in Sources */,
 				D1C995752EB696D70097CC1E /* AppConstants.swift in Sources */,
 				D1C4F94F2EB434840098A203 /* SettingsView.swift in Sources */,
@@ -401,6 +408,7 @@
 				D19A357D2EB3DAEB00CF95B8 /* CycleType.swift in Sources */,
 				D1DBFBC72EB9045600079338 /* Orientation.swift in Sources */,
 				D1C995732EB65C460097CC1E /* StatusPanel.swift in Sources */,
+				D1DBFBCB2EBA3AEF00079338 /* AppIconProvider.swift in Sources */,
 				D194BEA02EB3A915009C8D4F /* MyPomodoroApp.swift in Sources */,
 				D1C995782EB6A2C90097CC1E /* ControlButton.swift in Sources */,
 				D1C9956B2EB656C30097CC1E /* PomodoroControlsView.swift in Sources */,
