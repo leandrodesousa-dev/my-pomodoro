@@ -28,6 +28,7 @@
 		D1C995732EB65C460097CC1E /* StatusPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C995722EB65C450097CC1E /* StatusPanel.swift */; };
 		D1C995752EB696D70097CC1E /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C995742EB696D10097CC1E /* AppConstants.swift */; };
 		D1C995782EB6A2C90097CC1E /* ControlButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C995772EB6A2C80097CC1E /* ControlButton.swift */; };
+		D1DBFBC72EB9045600079338 /* Orientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1DBFBC62EB9045600079338 /* Orientation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,6 +73,7 @@
 		D1C995722EB65C450097CC1E /* StatusPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusPanel.swift; sourceTree = "<group>"; };
 		D1C995742EB696D10097CC1E /* AppConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstants.swift; sourceTree = "<group>"; };
 		D1C995772EB6A2C80097CC1E /* ControlButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlButton.swift; sourceTree = "<group>"; };
+		D1DBFBC62EB9045600079338 /* Orientation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Orientation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -190,6 +192,7 @@
 		D19A35672EB3AC1600CF95B8 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				D1DBFBC62EB9045600079338 /* Orientation.swift */,
 				D19A35762EB3CB2400CF95B8 /* Extensions.swift */,
 			);
 			path = Utilities;
@@ -396,6 +399,7 @@
 				D1C9956D2EB65B3A0097CC1E /* FlipClockView.swift in Sources */,
 				D19A35732EB3C86800CF95B8 /* PomodoroView.swift in Sources */,
 				D19A357D2EB3DAEB00CF95B8 /* CycleType.swift in Sources */,
+				D1DBFBC72EB9045600079338 /* Orientation.swift in Sources */,
 				D1C995732EB65C460097CC1E /* StatusPanel.swift in Sources */,
 				D194BEA02EB3A915009C8D4F /* MyPomodoroApp.swift in Sources */,
 				D1C995782EB6A2C90097CC1E /* ControlButton.swift in Sources */,
