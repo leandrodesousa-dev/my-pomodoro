@@ -16,9 +16,9 @@ struct SettingsView: View {
     // MARK: - Body
     var body: some View {
         NavigationView {
-            List {
-                if pomodoroViewModel.state != .paused {
-                    Section {
+            ScrollViewReader { proxy in
+                VStack(spacing: 0) {
+                    if pomodoroViewModel.state == .running {
                         HStack(alignment: .top, spacing: 12) {
                             Image(systemName: "lock.fill")
                                 .foregroundColor(.yellow)
@@ -29,149 +29,164 @@ struct SettingsView: View {
                                     .foregroundColor(.secondary)
                             }
                         }
-                        .padding(.vertical, 4)
+                        .padding(12)
                     }
-                }
-                
-                Section(header: Text("Duração de Foco")) {
-                    HStack(spacing: 12) {
-                        TextField("0", text: $focusValue)
-                            .keyboardType(.numberPad)
-                            .multilineTextAlignment(.leading)
-                            .padding(10)
-                            .background(Color(.secondarySystemBackground))
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 10)
-                                    .stroke(Color(.separator), lineWidth: 1)
-                            )
-                            .cornerRadius(10)
-                        Picker("Unit", selection: $focusUnit) {
-                            Text("sec").tag(FocusUnit.seconds)
-                            Text("min").tag(FocusUnit.minutes)
-                            Text("hr").tag(FocusUnit.hours)
+                    List {
+                        // Anchor para rolar ao topo quando bloquear
+                        Section { EmptyView() }
+                            .id("settingsTop")
+                        
+                        Section(header: Text("Duração de Foco")) {
+                            HStack(spacing: 12) {
+                                TextField("0", text: $focusValue)
+                                    .keyboardType(.numberPad)
+                                    .multilineTextAlignment(.leading)
+                                    .padding(10)
+                                    .background(Color(.secondarySystemBackground))
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 10)
+                                            .stroke(Color(.separator), lineWidth: 1)
+                                    )
+                                    .cornerRadius(10)
+                                Picker("Unit", selection: $focusUnit) {
+                                    Text("sec").tag(FocusUnit.seconds)
+                                    Text("min").tag(FocusUnit.minutes)
+                                    Text("hr").tag(FocusUnit.hours)
+                                }
+                                .pickerStyle(.segmented)
+                            }
+                            .onChange(of: focusValue) { _, _ in
+                                if let finalFocusTime = getValueFromFinalFocusTime(from: focusValue, unit: focusUnit), finalFocusTime > 0 {
+                                    pomodoroViewModel.focusDuration = finalFocusTime
+                                }
+                            }
+                            .onChange(of: focusUnit) { _, _ in
+                                if let finalFocusTime = getValueFromFinalFocusTime(from: focusValue, unit: focusUnit), finalFocusTime > 0 {
+                                    pomodoroViewModel.focusDuration = finalFocusTime
+                                }
+                            }
+                            
+                            HStack {
+                                Text("Tempo Final:")
+                                Spacer()
+                                Text(pomodoroViewModel.focusDuration.asTimerString)
+                                    .fontWeight(.semibold)
+                            }
                         }
-                        .pickerStyle(.segmented)
-                    }
-                    .onChange(of: focusValue) { _, _ in
-                        if let finalFocusTime = getValueFromFinalFocusTime(from: focusValue, unit: focusUnit), finalFocusTime > 0 {
-                            pomodoroViewModel.focusDuration = finalFocusTime
+                        
+                        Section(header: Text("Pausa Curta")) {
+                            HStack(spacing: 12) {
+                                TextField("0", text: $shortBreakValue)
+                                    .keyboardType(.numberPad)
+                                    .multilineTextAlignment(.leading)
+                                    .padding(10)
+                                    .background(Color(.secondarySystemBackground))
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 10)
+                                            .stroke(Color(.separator), lineWidth: 1)
+                                    )
+                                    .cornerRadius(10)
+                                Picker("Unit", selection: $shortBreakUnit) {
+                                    Text("sec").tag(BreakUnit.seconds)
+                                    Text("min").tag(BreakUnit.minutes)
+                                }
+                                .pickerStyle(.segmented)
+                            }
+                            .onChange(of: shortBreakValue) { _, _ in
+                                if let finalPauseTime = getValueOfFinalPauseTime(from: shortBreakValue, unit: shortBreakUnit), finalPauseTime > 0 {
+                                    pomodoroViewModel.shortBreakDuration = finalPauseTime
+                                }
+                            }
+                            .onChange(of: shortBreakUnit) { _, _ in
+                                if let finalPauseTime = getValueOfFinalPauseTime(from: shortBreakValue, unit: shortBreakUnit), finalPauseTime > 0 {
+                                    pomodoroViewModel.shortBreakDuration = finalPauseTime
+                                }
+                            }
+                            HStack {
+                                Text("Tempo Final:")
+                                Spacer()
+                                Text(pomodoroViewModel.shortBreakDuration.asTimerString)
+                                    .fontWeight(.semibold)
+                            }
+                        }
+                        
+                        Section(header: Text("Puasa Longa")) {
+                            HStack(spacing: 12) {
+                                TextField("0", text: $longBreakValue)
+                                    .keyboardType(.numberPad)
+                                    .multilineTextAlignment(.leading)
+                                    .padding(10)
+                                    .background(Color(.secondarySystemBackground))
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 10)
+                                            .stroke(Color(.separator), lineWidth: 1)
+                                    )
+                                    .cornerRadius(10)
+                                Picker("Unit", selection: $longBreakUnit) {
+                                    Text("sec").tag(BreakUnit.seconds)
+                                    Text("min").tag(BreakUnit.minutes)
+                                }
+                                .pickerStyle(.segmented)
+                            }
+                            .onChange(of: longBreakValue) { _, _ in
+                                if let finalPauseTime = getValueOfFinalPauseTime(from: longBreakValue, unit: longBreakUnit), finalPauseTime > 0 {
+                                    pomodoroViewModel.longBreakDuration = finalPauseTime
+                                }
+                            }
+                            .onChange(of: longBreakUnit) { _, _ in
+                                if let finalPauseTime = getValueOfFinalPauseTime(from: longBreakValue, unit: longBreakUnit), finalPauseTime > 0 {
+                                    pomodoroViewModel.longBreakDuration = finalPauseTime
+                                }
+                            }
+                            HStack {
+                                Text("Tempo Final:")
+                                Spacer()
+                                Text(pomodoroViewModel.longBreakDuration.asTimerString)
+                                    .fontWeight(.semibold)
+                            }
+                        }
+                        
+                        Section(header: Text("Ciclos")) {
+                            Stepper("Ciclos completos: \(pomodoroViewModel.cyclesBeforeLongBreak)",
+                                    value: $pomodoroViewModel.cyclesBeforeLongBreak,
+                                    in: 2...8)
+                        }
+                        
+                        Section(header: Text("Execução Automática & Notificações")) {
+                            Toggle(isOn: $pomodoroViewModel.autoStartFocus) {
+                                Text("Início automático do Foco")
+                            }
+                            
+                            Toggle(isOn: $pomodoroViewModel.autoStartBreaks) {
+                                Text("Início automático das Pausas")
+                            }
+                            
+                            Toggle(isOn: $pomodoroViewModel.notificationsEnabled) {
+                                Text("Notificações")
+                            }
+                            .onChange(of: pomodoroViewModel.notificationsEnabled) { _, isEnabled in
+                                if isEnabled {
+                                    pomodoroViewModel.setupSystemFeatures()
+                                } else {
+                                    pomodoroViewModel.cancelAllNotifications()
+                                }
+                            }
                         }
                     }
-                    .onChange(of: focusUnit) { _, _ in
-                        if let finalFocusTime = getValueFromFinalFocusTime(from: focusValue, unit: focusUnit), finalFocusTime > 0 {
-                            pomodoroViewModel.focusDuration = finalFocusTime
-                        }
-                    }
-
-                    HStack {
-                        Text("Tempo Final:")
-                        Spacer()
-                        Text(pomodoroViewModel.focusDuration.asTimerString)
-                            .fontWeight(.semibold)
-                    }
-                }
-                
-                Section(header: Text("Pausa Curta")) {
-                    HStack(spacing: 12) {
-                        TextField("0", text: $shortBreakValue)
-                            .keyboardType(.numberPad)
-                            .multilineTextAlignment(.leading)
-                            .padding(10)
-                            .background(Color(.secondarySystemBackground))
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 10)
-                                    .stroke(Color(.separator), lineWidth: 1)
-                            )
-                            .cornerRadius(10)
-                        Picker("Unit", selection: $shortBreakUnit) {
-                            Text("sec").tag(BreakUnit.seconds)
-                            Text("min").tag(BreakUnit.minutes)
-                        }
-                        .pickerStyle(.segmented)
-                    }
-                    .onChange(of: shortBreakValue) { _, _ in
-                        if let finalPauseTime = getValueOfFinalPauseTime(from: shortBreakValue, unit: shortBreakUnit), finalPauseTime > 0 {
-                            pomodoroViewModel.shortBreakDuration = finalPauseTime
-                        }
-                    }
-                    .onChange(of: shortBreakUnit) { _, _ in
-                        if let finalPauseTime = getValueOfFinalPauseTime(from: shortBreakValue, unit: shortBreakUnit), finalPauseTime > 0 {
-                            pomodoroViewModel.shortBreakDuration = finalPauseTime
-                        }
-                    }
-                    HStack {
-                        Text("Tempo Final:")
-                        Spacer()
-                        Text(pomodoroViewModel.shortBreakDuration.asTimerString)
-                            .fontWeight(.semibold)
-                    }
-                }
-                
-                Section(header: Text("Puasa Longa")) {
-                    HStack(spacing: 12) {
-                        TextField("0", text: $longBreakValue)
-                            .keyboardType(.numberPad)
-                            .multilineTextAlignment(.leading)
-                            .padding(10)
-                            .background(Color(.secondarySystemBackground))
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 10)
-                                    .stroke(Color(.separator), lineWidth: 1)
-                            )
-                            .cornerRadius(10)
-                        Picker("Unit", selection: $longBreakUnit) {
-                            Text("sec").tag(BreakUnit.seconds)
-                            Text("min").tag(BreakUnit.minutes)
-                        }
-                        .pickerStyle(.segmented)
-                    }
-                    .onChange(of: longBreakValue) { _, _ in
-                        if let finalPauseTime = getValueOfFinalPauseTime(from: longBreakValue, unit: longBreakUnit), finalPauseTime > 0 {
-                            pomodoroViewModel.longBreakDuration = finalPauseTime
-                        }
-                    }
-                    .onChange(of: longBreakUnit) { _, _ in
-                        if let finalPauseTime = getValueOfFinalPauseTime(from: longBreakValue, unit: longBreakUnit), finalPauseTime > 0 {
-                            pomodoroViewModel.longBreakDuration = finalPauseTime
-                        }
-                    }
-                    HStack {
-                        Text("Tempo Final:")
-                        Spacer()
-                        Text(pomodoroViewModel.longBreakDuration.asTimerString)
-                            .fontWeight(.semibold)
-                    }
-                }
-                
-                Section(header: Text("Ciclos")) {
-                    Stepper("Ciclos completos: \(pomodoroViewModel.cyclesBeforeLongBreak)",
-                            value: $pomodoroViewModel.cyclesBeforeLongBreak,
-                            in: 2...8)
-                }
-
-                Section(header: Text("Execução Automática & Notificações")) {
-                    Toggle(isOn: $pomodoroViewModel.autoStartFocus) {
-                        Text("Início automático do Foco")
-                    }
-
-                    Toggle(isOn: $pomodoroViewModel.autoStartBreaks) {
-                        Text("Início automático das Pausas")
-                    }
-
-                    Toggle(isOn: $pomodoroViewModel.notificationsEnabled) {
-                        Text("Notificações")
-                    }
-                    .onChange(of: pomodoroViewModel.notificationsEnabled) { _, isEnabled in
-                        if isEnabled {
-                            pomodoroViewModel.setupSystemFeatures()
-                        } else {
-                            pomodoroViewModel.cancelAllNotifications()
+                    .overlay(
+                        Color.black
+                            .opacity(pomodoroViewModel.state == .running ? 0.8 : 0)
+                            .animation(.easeInOut(duration: 0.2), value: pomodoroViewModel.state)
+                    )
+                    .disabled(pomodoroViewModel.state == .running)
+                    .onChange(of: pomodoroViewModel.state) { _, newValue in
+                        if newValue == .running {
+                            withAnimation { proxy.scrollTo("settingsTop", anchor: .top) }
                         }
                     }
                 }
             }
             .navigationTitle("Configurações")
-            .disabled(pomodoroViewModel.state != .paused)
             .onAppear {
                 let (focusValue, focusUnit) = splitFocus(time: pomodoroViewModel.focusDuration)
                 self.focusValue = focusValue
