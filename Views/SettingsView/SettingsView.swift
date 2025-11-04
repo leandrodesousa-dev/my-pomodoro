@@ -13,6 +13,9 @@ struct SettingsView: View {
     @State private var longBreakValue: String = ""
     @State private var longBreakUnit: BreakUnit = .minutes
     
+    @FocusState private var focusedField: FocusField?
+    private enum FocusField: Hashable { case focus, shortBreak, longBreak }
+    
     // MARK: - Body
     var body: some View {
         NavigationView {
@@ -32,7 +35,6 @@ struct SettingsView: View {
                         .padding(12)
                     }
                     List {
-                        // Anchor para rolar ao topo quando bloquear
                         Section { EmptyView() }
                             .id("settingsTop")
                         
@@ -48,6 +50,7 @@ struct SettingsView: View {
                                             .stroke(Color(.separator), lineWidth: 1)
                                     )
                                     .cornerRadius(10)
+                                     .focused($focusedField, equals: .focus)
                                 Picker("Unit", selection: $focusUnit) {
                                     Text("sec").tag(FocusUnit.seconds)
                                     Text("min").tag(FocusUnit.minutes)
@@ -86,6 +89,7 @@ struct SettingsView: View {
                                             .stroke(Color(.separator), lineWidth: 1)
                                     )
                                     .cornerRadius(10)
+                                     .focused($focusedField, equals: .shortBreak)
                                 Picker("Unit", selection: $shortBreakUnit) {
                                     Text("sec").tag(BreakUnit.seconds)
                                     Text("min").tag(BreakUnit.minutes)
@@ -110,7 +114,7 @@ struct SettingsView: View {
                             }
                         }
                         
-                        Section(header: Text("Puasa Longa")) {
+                        Section(header: Text("Pausa Longa")) {
                             HStack(spacing: 12) {
                                 TextField("0", text: $longBreakValue)
                                     .keyboardType(.numberPad)
@@ -122,6 +126,7 @@ struct SettingsView: View {
                                             .stroke(Color(.separator), lineWidth: 1)
                                     )
                                     .cornerRadius(10)
+                                     .focused($focusedField, equals: .longBreak)
                                 Picker("Unit", selection: $longBreakUnit) {
                                     Text("sec").tag(BreakUnit.seconds)
                                     Text("min").tag(BreakUnit.minutes)
@@ -179,6 +184,8 @@ struct SettingsView: View {
                             .animation(.easeInOut(duration: 0.2), value: pomodoroViewModel.state)
                     )
                     .disabled(pomodoroViewModel.state == .running)
+                    .scrollDismissesKeyboard(.immediately)
+                    .simultaneousGesture(TapGesture().onEnded { focusedField = nil })
                     .onChange(of: pomodoroViewModel.state) { _, newValue in
                         if newValue == .running {
                             withAnimation { proxy.scrollTo("settingsTop", anchor: .top) }
@@ -187,6 +194,18 @@ struct SettingsView: View {
                 }
             }
             .navigationTitle("Configurações")
+            .safeAreaInset(edge: .bottom) {
+                if focusedField != nil {
+                    HStack {
+                        Spacer()
+                        Button("Fechar") { focusedField = nil }
+                            .buttonStyle(.borderedProminent)
+                    }
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 8)
+                    .background(.ultraThinMaterial)
+                }
+            }
             .onAppear {
                 let (focusValue, focusUnit) = splitFocus(time: pomodoroViewModel.focusDuration)
                 self.focusValue = focusValue
