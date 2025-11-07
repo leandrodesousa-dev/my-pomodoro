@@ -5,10 +5,10 @@ public struct AppConstants {
     // MARK: - Default work session duration.
     /** The standard duration for the focused work interval (Pomodoro) in minutes. */
     struct Duration {
-        public static let defaultFocusDuration: TimeInterval = 0.0635 * 60
-        public static let defaultShortBreakDuration: TimeInterval = 0.5 * 60
-        public static let defaultLongBreakDuration: TimeInterval = 0.0635 * 60
-        public static let defaultCyclesBeforeLongBreak: Int = 2
+        public static let defaultFocusDuration: TimeInterval = 1500.0
+        public static let defaultShortBreakDuration: TimeInterval = 300.0
+        public static let defaultLongBreakDuration: TimeInterval = 600.0
+        public static let defaultCyclesBeforeLongBreak: Int = 4
     }
     
     // MARK: - Container for UI and Design constants.
