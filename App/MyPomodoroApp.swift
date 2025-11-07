@@ -2,11 +2,18 @@ import SwiftUI
 
 @main
 struct MyPomodoroApp: App {
-    @StateObject var pomodoroViewModel = PomodoroViewModel()
+    @StateObject var pomodoroViewModel: PomodoroViewModel
+    @StateObject var settingsViewModel: SettingsViewModel
     
     @Environment(\.scenePhase) var scenePhase
     @State private var showSplash: Bool = true
-
+    
+    init() {
+        let initialPomodoroViewModel = PomodoroViewModel()
+        _pomodoroViewModel = StateObject(wrappedValue: initialPomodoroViewModel)
+        _settingsViewModel = StateObject(wrappedValue: SettingsViewModel(pomodoroViewModel: initialPomodoroViewModel))
+    }
+    
     var body: some Scene {
         WindowGroup {
             ZStack {

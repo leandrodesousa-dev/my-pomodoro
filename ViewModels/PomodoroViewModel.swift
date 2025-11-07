@@ -32,10 +32,10 @@ final class PomodoroViewModel: ObservableObject {
         }
     }
 
-    @AppStorage("cyclesBeforeLongBreak") var cyclesBeforeLongBreak: Int = AppConstants.Duration.defaultCyclesBeforeLongBreak
-    @AppStorage("autoStartFocus") var autoStartFocus: Bool = AppConstants.GeneralConstants.defaultAutoStartFocus
-    @AppStorage("autoStartBreaks") var autoStartBreaks: Bool = AppConstants.GeneralConstants.defaultAutoStartBreaks
-    @AppStorage("notificationsEnabled") var notificationsEnabled: Bool = AppConstants.GeneralConstants.defaultNotificationsEnabled
+    @Published var cyclesBeforeLongBreak: Int = AppConstants.Duration.defaultCyclesBeforeLongBreak
+    var autoStartFocus: Bool = AppConstants.GeneralConstants.defaultAutoStartFocus
+    var autoStartBreaks: Bool = AppConstants.GeneralConstants.defaultAutoStartBreaks
+    var notificationsEnabled: Bool = AppConstants.GeneralConstants.defaultNotificationsEnabled
 
     // MARK: - Properties
     private var timer: Timer?
@@ -230,7 +230,28 @@ final class PomodoroViewModel: ObservableObject {
         UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
     }
     
-    // MARK: - Private Methods Notification
+    // MARK: SatusPanel
+    var statusText: String {
+        let currentCycle = (cyclesCompleted % cyclesBeforeLongBreak) + 1
+        return "Ciclos • \(currentCycle) de \(cyclesBeforeLongBreak)"
+    }
+    
+    var nextBreakText: String {
+        switch currentCycleType {
+        case .focus:
+            if cyclesCompleted % cyclesBeforeLongBreak == cyclesBeforeLongBreak - 1 {
+                return "Próximo: Pausa Longa \(longBreakDuration.asTimerString)"
+            } else {
+                return "Próximo: Pausa Curta \(shortBreakDuration.asTimerString)"
+            }
+        case .shortBreak, .longBreak:
+            return "Próximo: Foco \(focusDuration.asTimerString)"
+        }
+    }
+}
+
+// MARK: - Private Methods Notification
+extension PomodoroViewModel {
     private func requestNotificationPermission() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
             if granted { print("Permissão de notificação concedida.") }
@@ -271,25 +292,4 @@ final class PomodoroViewModel: ObservableObject {
             }
         }
     }
-    
-    // MARK: SatusPanel
-    var statusText: String {
-        let currentCycle = (cyclesCompleted % cyclesBeforeLongBreak) + 1
-        return "Ciclos • \(currentCycle) de \(cyclesBeforeLongBreak)"
-    }
-    
-    var nextBreakText: String {
-        switch currentCycleType {
-        case .focus:
-            if cyclesCompleted % cyclesBeforeLongBreak == cyclesBeforeLongBreak - 1 {
-                return "Próximo: Pausa Longa \(longBreakDuration.asTimerString)"
-            } else {
-                return "Próximo: Pausa Curta \(shortBreakDuration.asTimerString)"
-            }
-        case .shortBreak, .longBreak:
-            return "Próximo: Foco \(focusDuration.asTimerString)"
-        }
-    }
 }
-
-

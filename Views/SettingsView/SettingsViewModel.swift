@@ -1,20 +1,35 @@
 import Foundation
+import SwiftUI
 import Combine
 
 @MainActor
 final class SettingsViewModel: ObservableObject {
     
-    // MARK: - Properties
+    // MARK: - Dependencies
     private let pomodoroViewModel: PomodoroViewModel
+    private var cancellables = Set<AnyCancellable>()
     
-    @Published var isRunning: Bool
-    @Published var focusDuration: TimeInterval
-    @Published var shortBreakDuration: TimeInterval
-    @Published var longBreakDuration: TimeInterval
-    @Published var notificationsEnabled: Bool
-    @Published var autoStartFocus: Bool
-    @Published var autoStartBreaks: Bool
-    @Published var cyclesBeforeLongBreak: Int
+    // MARK: - AppStorage
+    @AppStorage("notificationsEnabled")
+    private var notificationsEnabledStorage: Bool = AppConstants.GeneralConstants.defaultNotificationsEnabled
+    @AppStorage("autoStartFocus")
+    private var autoStartFocusStorage: Bool = AppConstants.GeneralConstants.defaultAutoStartFocus
+    @AppStorage("autoStartBreaks")
+    private var autoStartBreaksStorage: Bool = AppConstants.GeneralConstants.defaultAutoStartBreaks
+    @AppStorage("cyclesBeforeLongBreak")
+    private var cyclesBeforeLongBreakStorage: Int = AppConstants.Duration.defaultCyclesBeforeLongBreak
+    
+    // MARK: - Published Properties
+    @Published var isRunning: Bool = false
+    @Published var focusDuration: TimeInterval = 0.0
+    @Published var shortBreakDuration: TimeInterval = 0.0
+    @Published var longBreakDuration: TimeInterval = 0.0
+    
+    @Published var notificationsEnabled: Bool = false
+    @Published var autoStartFocus: Bool = false
+    @Published var autoStartBreaks: Bool = false
+    @Published var cyclesBeforeLongBreak: Int = 0
+    
     @Published var focusValue: String = ""
     @Published var focusUnit: FocusUnit = .minutes
     @Published var shortBreakValue: String = ""
@@ -22,42 +37,64 @@ final class SettingsViewModel: ObservableObject {
     @Published var longBreakValue: String = ""
     @Published var longBreakUnit: BreakUnit = .minutes
     
-    private var cancellables = Set<AnyCancellable>()
-    
     // MARK: - Initializers
     init(pomodoroViewModel: PomodoroViewModel) {
         self.pomodoroViewModel = pomodoroViewModel
+        
         self.isRunning = pomodoroViewModel.state == .running
         self.focusDuration = pomodoroViewModel.focusDuration
         self.shortBreakDuration = pomodoroViewModel.shortBreakDuration
         self.longBreakDuration = pomodoroViewModel.longBreakDuration
-        self.notificationsEnabled = pomodoroViewModel.notificationsEnabled
-        self.autoStartFocus = pomodoroViewModel.autoStartFocus
-        self.autoStartBreaks = pomodoroViewModel.autoStartBreaks
-        self.cyclesBeforeLongBreak = pomodoroViewModel.cyclesBeforeLongBreak
         
-        setupInitial(pomodoroViewModel)
+        self.setupInitial()
+        
+        DispatchQueue.main.async {
+            self.syncSettingsFromStorage()
+            self.setupPersistenceBindings()
+        }
     }
 }
 
-// MARK: - Private Setup Methods
+// MARK: - Setup & Synchronization
 extension SettingsViewModel {
-    fileprivate func setupInitial(_ pomodoroViewModel: PomodoroViewModel) {
-        setupInitialValues()
-        
-        DispatchQueue.main.async {
-            self.setupBindings()
-            self.setupAutomationBindings()
-            
-            pomodoroViewModel.$state
-                .map { $0 == .running }
-                .sink { [weak self] isRunning in
-                    self?.isRunning = isRunning
-                }
-                .store(in: &self.cancellables)
-        }
+    private func setupInitial() {
+        pomodoroViewModel.$state
+            .map { $0 == .running }
+            .sink { [weak self] isRunning in
+                self.self?.isRunning = isRunning
+            }
+            .store(in: &cancellables)
     }
     
+    private func syncSettingsFromStorage() {
+        self.notificationsEnabled = self.notificationsEnabledStorage
+        self.autoStartFocus = self.autoStartFocusStorage
+        self.autoStartBreaks = self.autoStartBreaksStorage
+        self.cyclesBeforeLongBreak = self.cyclesBeforeLongBreakStorage
+        self.updatePomodoroOnViewLoad()
+        self.setupInitialValues()
+        self.setupBindings()
+        self.setupAutomationBindings()
+    }
+
+    private func setupPersistenceBindings() {
+        $notificationsEnabled
+            .assign(to: \.notificationsEnabledStorage, on: self)
+            .store(in: &cancellables)
+            
+        $autoStartFocus
+            .assign(to: \.autoStartFocusStorage, on: self)
+            .store(in: &cancellables)
+            
+        $autoStartBreaks
+            .assign(to: \.autoStartBreaksStorage, on: self)
+            .store(in: &cancellables)
+            
+        $cyclesBeforeLongBreak
+            .assign(to: \.cyclesBeforeLongBreakStorage, on: self)
+            .store(in: &cancellables)
+    }
+
     private func setupInitialValues() {
         (self.focusValue, self.focusUnit) = splitFocus(time: pomodoroViewModel.focusDuration)
         (self.shortBreakValue, self.shortBreakUnit) = splitBreak(time: pomodoroViewModel.shortBreakDuration)
@@ -65,26 +102,26 @@ extension SettingsViewModel {
     }
     
     private func setupAutomationBindings() {
-        $notificationsEnabled
+        self.$notificationsEnabled
             .sink { [weak self] isEnabled in
                 guard let self = self else { return }
                 self.pomodoroViewModel.notificationsEnabled = isEnabled
                 self.handleNotificationsChange(isEnabled: isEnabled)
             }
             .store(in: &cancellables)
-        
+            
         $autoStartFocus
             .sink { [weak self] value in
                 self?.pomodoroViewModel.autoStartFocus = value
             }
             .store(in: &cancellables)
-        
+            
         $autoStartBreaks
             .sink { [weak self] value in
                 self?.pomodoroViewModel.autoStartBreaks = value
             }
             .store(in: &cancellables)
-        
+            
         $cyclesBeforeLongBreak
             .sink { [weak self] value in
                 self?.pomodoroViewModel.cyclesBeforeLongBreak = value
@@ -98,18 +135,25 @@ extension SettingsViewModel {
                 self?.updateFocusDuration(value: value, unit: unit)
             }
             .store(in: &cancellables)
-        
+            
         Publishers.CombineLatest($shortBreakValue, $shortBreakUnit)
             .sink { [weak self] value, unit in
                 self?.updateShortBreakDuration(value: value, unit: unit)
             }
             .store(in: &cancellables)
-        
+            
         Publishers.CombineLatest($longBreakValue, $longBreakUnit)
             .sink { [weak self] value, unit in
                 self?.updateLongBreakDuration(value: value, unit: unit)
             }
             .store(in: &cancellables)
+    }
+    
+    func updatePomodoroOnViewLoad() {
+        pomodoroViewModel.notificationsEnabled = self.notificationsEnabled
+        pomodoroViewModel.autoStartFocus = self.autoStartFocus
+        pomodoroViewModel.autoStartBreaks = self.autoStartBreaks
+        pomodoroViewModel.cyclesBeforeLongBreak = self.cyclesBeforeLongBreak
     }
 }
 
@@ -149,7 +193,7 @@ extension SettingsViewModel {
         switch unit {
         case .seconds: return number
         case .minutes: return number * 60
-        case .hours:   return number * 3600
+        case .hours: return number * 3600
         }
     }
     
