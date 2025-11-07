@@ -33,6 +33,19 @@ A estrutura do projeto é modular e segue a organização por domínio (App, Pom
 Para uma visão detalhada da organização de pastas e arquivos, consulte o documento:
 [`Docs/project_structure.md`](Docs/project_structure.md)
 
+## 🤖 Ferramentas de IA Utilizadas
+
+O desenvolvimento do MyPomodoro foi aprimorado com o auxílio de ferramentas de Inteligência Artificial:
+
+* **Gemini AI:** Utilizado para ajustes e otimizações de código, sugestões de refatoração, e para a criação de ativos visuais, incluindo o ícone do aplicativo.
+* **Appscreens.com:** Empregado na geração de *screenshots* atraentes e padronizados para a App Store, garantindo uma apresentação profissional do aplicativo.
+
+## 🚀 Publicado na App Store\!
+
+MyPomodoro está disponível na App Store! Baixe agora e aumente sua produtividade:
+
+**[Link para o App na App Store]**
+
 ## 🛠️ Instalação e Execução
 
 Para rodar o MyPomodoro localmente, você precisa do **Xcode 15+** e do SDK do iOS.
