@@ -31,6 +31,11 @@
 		D1DBFBC72EB9045600079338 /* Orientation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1DBFBC62EB9045600079338 /* Orientation.swift */; };
 		D1DBFBC92EBA3ABB00079338 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1DBFBC82EBA3ABB00079338 /* SplashView.swift */; };
 		D1DBFBCB2EBA3AEF00079338 /* AppIconProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1DBFBCA2EBA3AEF00079338 /* AppIconProvider.swift */; };
+		D1DBFBF22EBD099900079338 /* DurationSettingSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1DBFBF12EBD099700079338 /* DurationSettingSection.swift */; };
+		D1DBFBF62EBD0F7000079338 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1DBFBF52EBD0F6E00079338 /* SettingsViewModel.swift */; };
+		D1DBFBF92EBD139B00079338 /* FocusUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1DBFBF82EBD139A00079338 /* FocusUnit.swift */; };
+		D1DBFBFB2EBD13A300079338 /* BreakUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1DBFBFA2EBD13A300079338 /* BreakUnit.swift */; };
+		D1DBFBFD2EBD14EA00079338 /* FocusField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1DBFBFC2EBD14E900079338 /* FocusField.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,6 +83,11 @@
 		D1DBFBC62EB9045600079338 /* Orientation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Orientation.swift; sourceTree = "<group>"; };
 		D1DBFBC82EBA3ABB00079338 /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		D1DBFBCA2EBA3AEF00079338 /* AppIconProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconProvider.swift; sourceTree = "<group>"; };
+		D1DBFBF12EBD099700079338 /* DurationSettingSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DurationSettingSection.swift; sourceTree = "<group>"; };
+		D1DBFBF52EBD0F6E00079338 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		D1DBFBF82EBD139A00079338 /* FocusUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusUnit.swift; sourceTree = "<group>"; };
+		D1DBFBFA2EBD13A300079338 /* BreakUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreakUnit.swift; sourceTree = "<group>"; };
+		D1DBFBFC2EBD14E900079338 /* FocusField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusField.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,11 +118,11 @@
 		D194BE932EB3A914009C8D4F = {
 			isa = PBXGroup;
 			children = (
+				D19A35652EB3ABF800CF95B8 /* Views */,
 				D19A356B2EB3AD2100CF95B8 /* ViewModels */,
 				D19A35682EB3AC2200CF95B8 /* Docs */,
 				D19A35672EB3AC1600CF95B8 /* Utilities */,
 				D19A35662EB3AC0A00CF95B8 /* Models */,
-				D19A35652EB3ABF800CF95B8 /* Views */,
 				D194BEC92EB3AB7D009C8D4F /* Resources */,
 				D194BE9E2EB3A915009C8D4F /* App */,
 				D194BEAF2EB3A916009C8D4F /* MyPomodoroTests */,
@@ -253,6 +263,9 @@
 		D1C9957D2EB6A32D0097CC1E /* SettingsView */ = {
 			isa = PBXGroup;
 			children = (
+				D1DBFBF72EBD138F00079338 /* Models */,
+				D1DBFBF52EBD0F6E00079338 /* SettingsViewModel.swift */,
+				D1DBFBF12EBD099700079338 /* DurationSettingSection.swift */,
 				D1C4F94E2EB4347C0098A203 /* SettingsView.swift */,
 			);
 			path = SettingsView;
@@ -264,6 +277,16 @@
 				D1C995722EB65C450097CC1E /* StatusPanel.swift */,
 			);
 			path = StatusPanel;
+			sourceTree = "<group>";
+		};
+		D1DBFBF72EBD138F00079338 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				D1DBFBFC2EBD14E900079338 /* FocusField.swift */,
+				D1DBFBFA2EBD13A300079338 /* BreakUnit.swift */,
+				D1DBFBF82EBD139A00079338 /* FocusUnit.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -402,12 +425,16 @@
 				D1DBFBC92EBA3ABB00079338 /* SplashView.swift in Sources */,
 				D1C9956F2EB65B6D0097CC1E /* FlipDigitBox.swift in Sources */,
 				D1C995752EB696D70097CC1E /* AppConstants.swift in Sources */,
+				D1DBFBF22EBD099900079338 /* DurationSettingSection.swift in Sources */,
+				D1DBFBF92EBD139B00079338 /* FocusUnit.swift in Sources */,
 				D1C4F94F2EB434840098A203 /* SettingsView.swift in Sources */,
 				D1C9956D2EB65B3A0097CC1E /* FlipClockView.swift in Sources */,
 				D19A35732EB3C86800CF95B8 /* PomodoroView.swift in Sources */,
 				D19A357D2EB3DAEB00CF95B8 /* CycleType.swift in Sources */,
 				D1DBFBC72EB9045600079338 /* Orientation.swift in Sources */,
 				D1C995732EB65C460097CC1E /* StatusPanel.swift in Sources */,
+				D1DBFBFB2EBD13A300079338 /* BreakUnit.swift in Sources */,
+				D1DBFBFD2EBD14EA00079338 /* FocusField.swift in Sources */,
 				D1DBFBCB2EBA3AEF00079338 /* AppIconProvider.swift in Sources */,
 				D194BEA02EB3A915009C8D4F /* MyPomodoroApp.swift in Sources */,
 				D1C995782EB6A2C90097CC1E /* ControlButton.swift in Sources */,
@@ -415,6 +442,7 @@
 				D19A356D2EB3BAEC00CF95B8 /* PomodoroViewModel.swift in Sources */,
 				D1C995712EB65B9E0097CC1E /* FlipDigit.swift in Sources */,
 				D19A357B2EB3DAD400CF95B8 /* PomodoroState.swift in Sources */,
+				D1DBFBF62EBD0F7000079338 /* SettingsViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

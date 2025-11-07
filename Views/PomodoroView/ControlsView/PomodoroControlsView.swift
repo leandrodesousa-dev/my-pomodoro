@@ -10,7 +10,7 @@ struct PomodoroControlsView: View {
                 Group {
                     if pomodoroViewModel.state == .running {
                         ControlButton(
-                            title: "Pause",
+                            title: "Pausa",
                             iconName: "pause.fill",
                             backgroundColor: .red,
                             foregroundColor: .primary,
@@ -18,7 +18,7 @@ struct PomodoroControlsView: View {
                         )
                     } else {
                         ControlButton(
-                            title: "Start",
+                            title: "Iniciar",
                             iconName: "play.fill",
                             backgroundColor: .blue,
                             foregroundColor: .white,
@@ -28,7 +28,7 @@ struct PomodoroControlsView: View {
                 }
 
                 ControlButton(
-                    title: "Restart",
+                    title: "Recomeçar",
                     iconName: "arrow.counterclockwise",
                     backgroundColor: Color(.systemGray5),
                     foregroundColor: .primary,
@@ -38,7 +38,7 @@ struct PomodoroControlsView: View {
             .frame(maxWidth: .infinity)
 
             ControlButton(
-                title: "Skip Break",
+                title: "Pular Pausa",
                 iconName: "forward.fill",
                 backgroundColor: Color.yellow,
                 foregroundColor: .primary,

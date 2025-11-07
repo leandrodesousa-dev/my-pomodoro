@@ -17,12 +17,6 @@ struct PomodoroView: View {
             .padding(.vertical, AppConstants.UI.standardPadding)
         }
     }
-
-    fileprivate func titlePomodoroView(_ isLandscape: Bool) -> Text {
-        return Text(pomodoroViewModel.currentCycleType == .focus ? "Foco" : (pomodoroViewModel.currentCycleType == .shortBreak ? "Pausa Curta" : "Pausa Longa"))
-            .font(isLandscape ? .title2 : .title)
-            .fontWeight(.bold)
-    }
     
     fileprivate func setFlipClockView(_ isLandscape: Bool, width: CGFloat) -> some View {
         return FlipClockView(
@@ -63,6 +57,13 @@ struct PomodoroView: View {
             PomodoroControlsView()
         }
     }
+    
+    fileprivate func titlePomodoroView(_ isLandscape: Bool) -> Text {
+        return Text(pomodoroViewModel.currentCycleType == .focus ? "Foco" : (pomodoroViewModel.currentCycleType == .shortBreak ? "Pausa Curta" : "Pausa Longa"))
+            .font(isLandscape ? .title2 : .title)
+            .fontWeight(.bold)
+    }
+
 }
 
 #Preview {

@@ -10,7 +10,7 @@ struct ContentView: View {
                 PomodoroView()
                     .environmentObject(pomodoroViewModel)
                     .tabItem {
-                        Label("Timer", systemImage: "timer")
+                        Label("Tempo", systemImage: "timer")
                     }
 
                 Group {
@@ -27,8 +27,7 @@ struct ContentView: View {
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                         .background(Color(.systemBackground))
                     } else {
-                        SettingsView()
-                            .environmentObject(pomodoroViewModel)
+                        SettingsView(pomodoroViewModel: pomodoroViewModel)
                     }
                 }
                 .tabItem {

@@ -1,6 +1,7 @@
 import SwiftUI
 import UserNotifications
 
+@MainActor
 final class PomodoroViewModel: ObservableObject {
     // MARK: - Published Properties
     @Published var state: PomodoroState = .stopped
@@ -109,16 +110,14 @@ final class PomodoroViewModel: ObservableObject {
     
     // MARK: - Time Methods
     @objc private func updateTime() {
-        DispatchQueue.main.async {
-            if self.timeRemaining > 0 {
-                self.timeRemaining -= 1
-                if self.timeRemaining <= 0 {
-                    self.timeRemaining = 0
-                    self.endCycle()
-                }
-            } else {
+        if self.timeRemaining > 0 {
+            self.timeRemaining -= 1
+            if self.timeRemaining <= 0 {
+                self.timeRemaining = 0
                 self.endCycle()
             }
+        } else {
+            self.endCycle()
         }
     }
     
