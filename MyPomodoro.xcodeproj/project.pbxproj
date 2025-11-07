@@ -115,11 +115,46 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D1830F532EBE5C3B00CC1AC5 /* PomodoroMain */ = {
+			isa = PBXGroup;
+			children = (
+				D1C9957C2EB6A3160097CC1E /* PomodoroView */,
+				D19A356B2EB3AD2100CF95B8 /* ViewModel */,
+			);
+			path = PomodoroMain;
+			sourceTree = "<group>";
+		};
+		D1830F542EBE5C9200CC1AC5 /* Splash */ = {
+			isa = PBXGroup;
+			children = (
+				D1DBFBC82EBA3ABB00079338 /* SplashView.swift */,
+			);
+			path = Splash;
+			sourceTree = "<group>";
+		};
+		D1830F552EBE5CA800CC1AC5 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				D1C9957D2EB6A32D0097CC1E /* SettingsView */,
+				D1830F562EBE5CC400CC1AC5 /* ViewModel */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		D1830F562EBE5CC400CC1AC5 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				D1DBFBF52EBD0F6E00079338 /* SettingsViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		D194BE932EB3A914009C8D4F = {
 			isa = PBXGroup;
 			children = (
+				D1830F552EBE5CA800CC1AC5 /* Settings */,
+				D1830F532EBE5C3B00CC1AC5 /* PomodoroMain */,
 				D19A35652EB3ABF800CF95B8 /* Views */,
-				D19A356B2EB3AD2100CF95B8 /* ViewModels */,
 				D19A35682EB3AC2200CF95B8 /* Docs */,
 				D19A35672EB3AC1600CF95B8 /* Utilities */,
 				D19A35662EB3AC0A00CF95B8 /* Models */,
@@ -186,9 +221,7 @@
 		D19A35652EB3ABF800CF95B8 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				D1DBFBC82EBA3ABB00079338 /* SplashView.swift */,
-				D1C9957C2EB6A3160097CC1E /* PomodoroView */,
-				D1C9957D2EB6A32D0097CC1E /* SettingsView */,
+				D1830F542EBE5C9200CC1AC5 /* Splash */,
 				D194BEA12EB3A915009C8D4F /* ContentView.swift */,
 			);
 			path = Views;
@@ -222,12 +255,12 @@
 			path = Docs;
 			sourceTree = "<group>";
 		};
-		D19A356B2EB3AD2100CF95B8 /* ViewModels */ = {
+		D19A356B2EB3AD2100CF95B8 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
 				D19A356C2EB3BAEC00CF95B8 /* PomodoroViewModel.swift */,
 			);
-			path = ViewModels;
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		D1C995762EB6A2B00097CC1E /* FlipClock */ = {
@@ -264,7 +297,6 @@
 			isa = PBXGroup;
 			children = (
 				D1DBFBF72EBD138F00079338 /* Models */,
-				D1DBFBF52EBD0F6E00079338 /* SettingsViewModel.swift */,
 				D1DBFBF12EBD099700079338 /* DurationSettingSection.swift */,
 				D1C4F94E2EB4347C0098A203 /* SettingsView.swift */,
 			);
