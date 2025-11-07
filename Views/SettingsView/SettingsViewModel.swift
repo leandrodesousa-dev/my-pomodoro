@@ -18,6 +18,12 @@ final class SettingsViewModel: ObservableObject {
     private var autoStartBreaksStorage: Bool = AppConstants.GeneralConstants.defaultAutoStartBreaks
     @AppStorage("cyclesBeforeLongBreak")
     private var cyclesBeforeLongBreakStorage: Int = AppConstants.Duration.defaultCyclesBeforeLongBreak
+    @AppStorage("focusDuration")
+    private var focusDurationStorage: TimeInterval = AppConstants.Duration.defaultFocusDuration
+    @AppStorage("shortBreakDuration")
+    private var shortBreakDurationStorage: TimeInterval = AppConstants.Duration.defaultShortBreakDuration
+    @AppStorage("longBreakDuration")
+    private var longBreakDurationStorage: TimeInterval = AppConstants.Duration.defaultLongBreakDuration
     
     // MARK: - Published Properties
     @Published var isRunning: Bool = false
@@ -40,11 +46,7 @@ final class SettingsViewModel: ObservableObject {
     // MARK: - Initializers
     init(pomodoroViewModel: PomodoroViewModel) {
         self.pomodoroViewModel = pomodoroViewModel
-        
         self.isRunning = pomodoroViewModel.state == .running
-        self.focusDuration = pomodoroViewModel.focusDuration
-        self.shortBreakDuration = pomodoroViewModel.shortBreakDuration
-        self.longBreakDuration = pomodoroViewModel.longBreakDuration
         
         self.setupInitial()
         
@@ -61,7 +63,7 @@ extension SettingsViewModel {
         pomodoroViewModel.$state
             .map { $0 == .running }
             .sink { [weak self] isRunning in
-                self.self?.isRunning = isRunning
+                    self?.isRunning = isRunning
             }
             .store(in: &cancellables)
     }
@@ -71,6 +73,9 @@ extension SettingsViewModel {
         self.autoStartFocus = self.autoStartFocusStorage
         self.autoStartBreaks = self.autoStartBreaksStorage
         self.cyclesBeforeLongBreak = self.cyclesBeforeLongBreakStorage
+        self.focusDuration = self.focusDurationStorage
+        self.shortBreakDuration = self.shortBreakDurationStorage
+        self.longBreakDuration = self.longBreakDurationStorage
         self.updatePomodoroOnViewLoad()
         self.setupInitialValues()
         self.setupBindings()
@@ -92,6 +97,18 @@ extension SettingsViewModel {
             
         $cyclesBeforeLongBreak
             .assign(to: \.cyclesBeforeLongBreakStorage, on: self)
+            .store(in: &cancellables)
+        
+        $focusDuration
+            .assign(to: \.focusDurationStorage, on: self)
+            .store(in: &cancellables)
+        
+        $shortBreakDuration
+            .assign(to: \.shortBreakDurationStorage, on: self)
+            .store(in: &cancellables)
+        
+        $longBreakDuration
+            .assign(to: \.longBreakDurationStorage, on: self)
             .store(in: &cancellables)
     }
 
@@ -127,6 +144,24 @@ extension SettingsViewModel {
                 self?.pomodoroViewModel.cyclesBeforeLongBreak = value
             }
             .store(in: &cancellables)
+        
+        $focusDuration
+            .sink { [weak self] value in
+                self?.pomodoroViewModel.focusDuration = value
+            }
+            .store(in: &cancellables)
+        
+        $shortBreakDuration
+            .sink { [weak self] value in
+                self?.pomodoroViewModel.shortBreakDuration = value
+            }
+            .store(in: &cancellables)
+        
+        $longBreakDuration
+            .sink { [weak self] value in
+                self?.pomodoroViewModel.longBreakDuration = value
+            }
+            .store(in: &cancellables)
     }
     
     private func setupBindings() {
@@ -154,6 +189,9 @@ extension SettingsViewModel {
         pomodoroViewModel.autoStartFocus = self.autoStartFocus
         pomodoroViewModel.autoStartBreaks = self.autoStartBreaks
         pomodoroViewModel.cyclesBeforeLongBreak = self.cyclesBeforeLongBreak
+        pomodoroViewModel.focusDuration = self.focusDuration
+        pomodoroViewModel.shortBreakDuration = self.shortBreakDuration
+        pomodoroViewModel.longBreakDuration = self.longBreakDuration
     }
 }
 

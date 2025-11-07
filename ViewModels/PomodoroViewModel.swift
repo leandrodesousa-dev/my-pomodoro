@@ -9,22 +9,21 @@ final class PomodoroViewModel: ObservableObject {
     @Published var timeRemaining: TimeInterval = 0
     @Published var cyclesCompleted: Int = 0
     
-    // MARK: - AppStorage Properties
-    @AppStorage("focusDuration") var focusDuration: TimeInterval = AppConstants.Duration.defaultFocusDuration {
+    @Published var focusDuration: TimeInterval = AppConstants.Duration.defaultFocusDuration {
         didSet {
             if currentCycleType == .focus {
                 timeRemaining = focusDuration
             }
         }
     }
-    @AppStorage("shortBreakDuration") var shortBreakDuration: TimeInterval = AppConstants.Duration.defaultShortBreakDuration {
+    @Published var shortBreakDuration: TimeInterval = AppConstants.Duration.defaultShortBreakDuration {
         didSet {
             if currentCycleType == .shortBreak {
                 timeRemaining = shortBreakDuration
             }
         }
     }
-    @AppStorage("longBreakDuration") var longBreakDuration: TimeInterval = AppConstants.Duration.defaultLongBreakDuration {
+    @Published var longBreakDuration: TimeInterval = AppConstants.Duration.defaultLongBreakDuration {
         didSet {
             if currentCycleType == .longBreak {
                 timeRemaining = longBreakDuration
@@ -33,9 +32,9 @@ final class PomodoroViewModel: ObservableObject {
     }
 
     @Published var cyclesBeforeLongBreak: Int = AppConstants.Duration.defaultCyclesBeforeLongBreak
-    var autoStartFocus: Bool = AppConstants.GeneralConstants.defaultAutoStartFocus
-    var autoStartBreaks: Bool = AppConstants.GeneralConstants.defaultAutoStartBreaks
-    var notificationsEnabled: Bool = AppConstants.GeneralConstants.defaultNotificationsEnabled
+    @Published var autoStartFocus: Bool = AppConstants.GeneralConstants.defaultAutoStartFocus
+    @Published var autoStartBreaks: Bool = AppConstants.GeneralConstants.defaultAutoStartBreaks
+    @Published var notificationsEnabled: Bool = AppConstants.GeneralConstants.defaultNotificationsEnabled
 
     // MARK: - Properties
     private var timer: Timer?
