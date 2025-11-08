@@ -38,7 +38,6 @@ Para uma visão detalhada da organização de pastas e arquivos, consulte o docu
 O desenvolvimento do MyPomodoro foi aprimorado com o auxílio de ferramentas de Inteligência Artificial:
 
 * **Gemini AI:** Utilizado para ajustes e otimizações de código, sugestões de refatoração, e para a criação de ativos visuais, incluindo o ícone do aplicativo.
-* **Appscreens.com:** Empregado na geração de *screenshots* atraentes e padronizados para a App Store, garantindo uma apresentação profissional do aplicativo.
 
 ## 🚀 Publicado na App Store\!
 
