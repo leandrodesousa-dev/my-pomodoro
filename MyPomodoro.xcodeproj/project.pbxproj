@@ -36,6 +36,7 @@
 		D1DBFBF92EBD139B00079338 /* FocusUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1DBFBF82EBD139A00079338 /* FocusUnit.swift */; };
 		D1DBFBFB2EBD13A300079338 /* BreakUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1DBFBFA2EBD13A300079338 /* BreakUnit.swift */; };
 		D1DBFBFD2EBD14EA00079338 /* FocusField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1DBFBFC2EBD14E900079338 /* FocusField.swift */; };
+		D1FC75882EC3897300496F9E /* privacy_policies.md in Resources */ = {isa = PBXBuildFile; fileRef = D1FC75872EC3896D00496F9E /* privacy_policies.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,6 +89,7 @@
 		D1DBFBF82EBD139A00079338 /* FocusUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusUnit.swift; sourceTree = "<group>"; };
 		D1DBFBFA2EBD13A300079338 /* BreakUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreakUnit.swift; sourceTree = "<group>"; };
 		D1DBFBFC2EBD14E900079338 /* FocusField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusField.swift; sourceTree = "<group>"; };
+		D1FC75872EC3896D00496F9E /* privacy_policies.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = privacy_policies.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -250,6 +252,7 @@
 		D19A35682EB3AC2200CF95B8 /* Docs */ = {
 			isa = PBXGroup;
 			children = (
+				D1FC75872EC3896D00496F9E /* privacy_policies.md */,
 				D19A35692EB3AC7D00CF95B8 /* project_structure.md */,
 			);
 			path = Docs;
@@ -428,6 +431,7 @@
 				D19A356A2EB3AC7D00CF95B8 /* project_structure.md in Resources */,
 				D19A35642EB3ABD700CF95B8 /* Preview Assets.xcassets in Resources */,
 				D194BEA42EB3A916009C8D4F /* Assets.xcassets in Resources */,
+				D1FC75882EC3897300496F9E /* privacy_policies.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -641,6 +645,7 @@
 				DEVELOPMENT_TEAM = 3FFW8PGY85;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -653,9 +658,13 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.lss.dev.MyPomodoro;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -670,6 +679,7 @@
 				DEVELOPMENT_TEAM = 3FFW8PGY85;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -682,9 +692,13 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.lss.dev.MyPomodoro;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
